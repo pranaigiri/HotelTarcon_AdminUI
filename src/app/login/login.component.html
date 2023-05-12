@@ -1,0 +1,53 @@
+<div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8 bg-[#EEAC36] h-screen">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+  </div>
+
+  <div class="mt-2 sm:mx-auto sm:w-full sm:max-w-[480px]">
+    <div class="bg-white p-6 py-8 shadow-lg sm:rounded-lg sm:px-12">
+      <img class="tarcon-logo mx-auto h-full w-auto p-0" src={{logoUrl}} alt="tarcon_logo" />
+      <h2 class="nav-title mt-1 text-center text-2xl font-bold leading-9 tracking-tight">HOTEL TARCON</h2>
+
+      <form class="space-y-6 mt-3" action="#" method="POST">
+        <section class="space-y-4 mt-8 mb-12">
+          <div>
+            <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Username</label>
+            <div class="mt-2">
+              <input id="username" name="username" type="text" autocomplete="username"
+                [(ngModel)]="credentials.user_name" required
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEAC36] sm:text-sm sm:leading-6"
+                style="outline: none;" />
+            </div>
+          </div>
+
+          <div>
+            <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+            <div class="mt-1">
+              <input id="password" name="password" type="password" autocomplete="current-password"
+                [(ngModel)]="credentials.password" required
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#EEAC36] sm:text-sm sm:leading-6"
+                style="outline: none;" />
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <input id="remember-me" name="remember-me" type="checkbox"
+                class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+              <label for="remember-me" class="ml-3 block text-sm leading-6 text-gray-900">Remember me</label>
+            </div>
+
+            <div class="text-sm leading-6">
+              <a href="#" class="font-semibold text-[#EEAC3A] hover:text-[#ffc107]">Forgot password?</a>
+            </div>
+          </div>
+
+        </section>
+
+        <div>
+          <button (click)="submit()"
+            class="flex w-full justify-center rounded-md bg-[#EEAC36] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#ffc107] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
