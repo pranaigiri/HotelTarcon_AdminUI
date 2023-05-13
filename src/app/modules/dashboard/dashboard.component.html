@@ -1,3 +1,76 @@
-<p>
-  dashboard works!
-</p>
+<div class="container mx-auto px-4">
+  <section class="my-6">
+    <div>
+      <h3 class="font-semibold leading-6 text-3xl text-gray-900">Title</h3>
+      <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+        <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+          <dt class="truncate text-sm font-medium text-gray-500">Total Guests</dt>
+          <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">71,897</dd>
+        </div>
+        <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+          <dt class="truncate text-sm font-medium text-gray-500">Avg. Online Bookings</dt>
+          <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">58.16%</dd>
+        </div>
+        <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+          <dt class="truncate text-sm font-medium text-gray-500">Avg. Offline Bookings</dt>
+          <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">24.57%</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+  <section class="my-6">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th class="px-6 py-3 text-right" *ngFor="let header of tableHeader">
+              {{header.title}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+          *ngFor="let booking of bookingsData"
+          >
+            <!-- BOOKING ID -->
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-left">
+              {{booking.booking.booking_id}}
+            </th>
+            <!-- GUEST NAME -->
+            <td class="px-6 py-4">
+              {{ booking.guests.guest_name }}
+            </td>
+            <!-- STATUS -->
+            <td class="px-6 py-4">
+              {{booking.booking.booking_status}}
+            </td>
+            <!-- BOOKING DATE -->
+            <td class="px-6 py-4">
+              {{booking.booking.booking_from}}
+            </td>
+            <!-- CHECK-IN -->
+            <td class="px-6 py-4">
+              {{ booking.booking.booking_till }}
+            </td>
+            <!-- CHECK-OUT -->
+            <td class="px-6 py-4">
+              {{ booking.payment.payment_status }}
+            </td>
+            <!-- BOOKING MODE -->
+            <td class="px-6 py-4">
+              {{booking.booking.booking_mode}}
+            </td>
+            <!-- TOTAL GUEST -->
+            <td class="px-6 py-4">
+              {{booking.guests.guest_total}}
+            </td>
+            
+            <td class="px-6 py-4 text-right">
+              <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
