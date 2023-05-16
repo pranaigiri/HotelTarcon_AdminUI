@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { error } from 'console';
 import { ApiService } from 'src/app/services/api.service';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,7 +15,7 @@ export class DashboardComponent implements OnInit {
 
 
   constructor(private apiService:ApiService) {
-    this.tableHeader = [  { title: "Booking Id" },  { title: "Guest Name" },  { title: "Status" },  { title: "Booking Date" },  { title: "Check-in" },  { title: "Check-out" }, {title: "Booking Mode"}, { title: "Total Guest" }, { title: "Option" }];
+    this.tableHeader = ["Booking Id","Guest Name","Status","Booking Date","Check-in","Check-out","Booking Mode","Total Guest","Option"];
     this.GetAllBookings();
    }
 
