@@ -1,13 +1,19 @@
 <!-- This is an example component -->
 <div class='flex items-center justify-center min-h-screen from-purple-100 via-red-300 to-indigo-500 bg-gradient-to-br'>
-  <div class='w-full mx-10 px-10 py-8 mx-auto bg-white rounded-lg shadow-xl'>
+  <div class='w-full spx-10 mx-8 py-8 bg-white rounded-lg shadow-xl header-bg'>
     <h1 class="text-xl mb-10 text-center">Booking Form</h1>
-    <!-- THE ACCORDION WITH <details> <summary> HTML Tag -->
-    <details class="w-full bg-white border border-blue-500 cursor-pointer mb-3">
-      <summary class="w-full bg-white text-dark flex justify-between px-4 py-3  after:content-['+']">Order Summary
+    <!-- ORDER SUMMARY -->
+    <details class="w-full border cursor-pointer mb-3 header-bg">
+      <summary class="w-full bg-white text-dark flex justify-between px-4 py-3  after:content-['+']">
+        <div class="flex justify-center items-center space-x-2">
+          <i class="fa-solid fa-hourglass-end text-[#FFA500]"></i>
+          <p>
+            Order Summary
+          </p>
+        </div>
       </summary>
 
-      <div class="w-full px-4 py-3">
+      <div class="w-full px-4 py-3 bg-white">
         <table class="table-auto w-full">
           <thead class="text-muted text-left">
             <tr>
@@ -21,8 +27,13 @@
           <tbody>
             <tr>
               <th scope="row" class="border px-4 py-2">Standard</th>
-              <td class="border px-4 py-2">16, May 2020</td>
-              <td class="border px-4 py-2">20, May 2020</td>
+              <td class="border px-4 py-2">
+                <input type="date" name="From">
+              </td>
+              <td class="border px-4 py-2">
+                <input type="date" name="To">
+
+              </td>
               <td class="border px-4 py-2">4 days</td>
               <td class="border px-4 py-2">₹ 7386/-</td>
             </tr>
@@ -34,12 +45,17 @@
 
     </details>
 
-    <details class="w-full bg-white border border-blue-500 cursor-pointer mb-3">
-      <summary class="w-full bg-white text-dark flex justify-between px-4 py-3 after:content-['+']">Contact Details
+    <!-- CONTACT DETAILS -->
+    <details class="w-full border cursor-pointer mb-3 header-bg">
+      <summary class="w-full bg-white text-dark flex justify-between px-4 py-3 space-x-2 after:content-['+']">
+        <div class="flex justify-center items-center space-x-2">
+          <i class="fa-solid fa-hourglass-end text-[#FFA500]"></i>
+          <p>
+            Contact Details
+          </p>
+        </div>
       </summary>
-      <div class="w-full px-4 py-5">
-
-        <!-- contact form -->
+      <div class="w-full px-4 py-5 bg-white">
         <form class="grid grid-cols-3 gap-4 w-full">
           <div class="form-group col-12 col-md-6 col-xl-4">
             <input type="text" placeholder="Full Name" class="w-full rounded-lg border px-3 py-2" />
@@ -104,14 +120,17 @@
         </form>
       </div>
     </details>
-
-    <details class="w-full bg-white border border-blue-500 cursor-pointer mb-3">
+    <!-- PAYMENT OPTIONS -->
+    <details class="w-full border header-bg cursor-pointer mb-3 ">
       <summary class="w-full bg-white text-dark flex justify-between px-4 py-3  after:content-['+']">
-        Payment Options
+        <div class="flex justify-center items-center space-x-2">
+          <i class="fa-solid fa-hourglass-end text-[#FFA500]"></i>
+          <p>Payment Options</p>
+        </div>
       </summary>
       <!-- Added From Here -->
 
-      <div class="container py-5">
+      <div class="container space-x-2 py-5 bg-white">
 
         <div class="form-check flex items-center justify-center gap-2">
           <input class="form-check-input" type="radio" name="razorpayRadio" id="razorpayRadio" checked>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CountryISO, SearchCountryField } from "ngx-intl-tel-input";
 
+
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
