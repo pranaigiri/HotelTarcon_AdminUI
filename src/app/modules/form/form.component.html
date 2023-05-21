@@ -1,13 +1,19 @@
+<div class="fixed inset-x-0 top-0 px-4 py-3 py-md-3 mb-5 shadow-sm bg-white header-bg">
+  <div class="container flex justify-between items-center px-5">
+    <h1 class="my-0 text-2xl text-[#FFA500] ">Checkout</h1>
+    <i class="fa fa-x my-0"></i>
+  </div>
+</div>
 <!-- This is an example component -->
-<div class='flex items-center justify-center min-h-screen from-purple-100 via-red-300 to-indigo-500 bg-gradient-to-br'>
-  <div class='w-full spx-10 mx-8 py-8 bg-white rounded-lg shadow-xl header-bg'>
-    <h1 class="text-xl mb-10 text-center">Booking Form</h1>
+<div class='flex items-center justify-center min-h-screen bg-white'>
+  <div class='w-full mx-8 py-8 bg-white rounded-lg shadow-xl header-bg'>
+    <h1 class="text-xl mb-10 text-center font-bold ">Booking Form</h1>
     <!-- ORDER SUMMARY -->
     <details class="w-full border cursor-pointer mb-3 header-bg">
       <summary class="w-full bg-white text-dark flex justify-between px-4 py-3  after:content-['+']">
         <div class="flex justify-center items-center space-x-2">
           <i class="fa-solid fa-hourglass-end text-[#FFA500]"></i>
-          <p>
+          <p class="font-semibold">
             Order Summary
           </p>
         </div>
@@ -17,7 +23,7 @@
         <table class="table-auto w-full">
           <thead class="text-muted text-left">
             <tr>
-              <th scope="col" class="px-4 py-2">Item</th>
+              <th scope="col" class="px-2 py-2">Item</th>
               <th scope="col" class="px-4 py-2">From</th>
               <th scope="col" class="px-4 py-2">To</th>
               <th scope="col" class="px-4 py-2">Total Days</th>
@@ -26,16 +32,32 @@
           </thead>
           <tbody>
             <tr>
-              <th scope="row" class="border px-4 py-2">Standard</th>
+              <th scope="row" class="border px-0 py-2">
+                <div class="relative inline-flex">
+                  <select [(ngModel)]="details.booking.room_category_id" (change)="onRoomSelectionChange()"
+                    class="block appearance-none w-full bg-white text-gray-700 py-2 px-3 pr-8 rounded leading-tight focus:outline-none focus:border-blue-500 focus:shadow-outline">
+                    <option value="" disabled selected>Select a room category</option>
+                    <option *ngFor="let room of roomDetails" [value]="room.categoryId">{{ room.categoryName }}</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <i class="fas fa-chevron-down"></i>
+                  </div>
+                </div>
+              </th>
+
+
               <td class="border px-4 py-2">
-                <input type="date" name="From">
+                <input type="date" name="From" [(ngModel)]="details.booking.booking_date"
+                  (change)="calculateTotalDays()">
               </td>
               <td class="border px-4 py-2">
-                <input type="date" name="To">
+                <input type="date" name="To" [(ngModel)]="details.booking.booking_from" (change)="calculateTotalDays()">
 
               </td>
-              <td class="border px-4 py-2">4 days</td>
-              <td class="border px-4 py-2">₹ 7386/-</td>
+              <td class="border px-4 py-2">{{totalDays}}</td>
+              <!-- <td class="border px-4 py-2">₹ {{ calculateTotalCostWithTax() | number: '1.2-2' }}/-</td> -->
+              <td class="border px-4 py-2">₹ {{ calculateTotalCostWithTax() | number: '1.2-2' || '0' }}/-</td>
+
             </tr>
           </tbody>
         </table>
@@ -50,74 +72,81 @@
       <summary class="w-full bg-white text-dark flex justify-between px-4 py-3 space-x-2 after:content-['+']">
         <div class="flex justify-center items-center space-x-2">
           <i class="fa-solid fa-hourglass-end text-[#FFA500]"></i>
-          <p>
+          <p class="font-semibold">
             Contact Details
           </p>
         </div>
       </summary>
       <div class="w-full px-4 py-5 bg-white">
-        <form class="grid grid-cols-3 gap-4 w-full">
-          <div class="form-group col-12 col-md-6 col-xl-4">
-            <input type="text" placeholder="Full Name" class="w-full rounded-lg border px-3 py-2" />
-          </div>
-          <!-- email -->
-
-          <div class="form-group col-12 col-md-6 col-xl-4">
-            <div class="relative">
-              <input type="text" placeholder="Email" class="w-full rounded-lg border px-3 py-2 pl-10">
-              <i class="fas fa-envelope absolute top-3 left-3 text-gray-400"></i>
+        <ng-container>
+          <form class="grid grid-cols-3 gap-4 w-full">
+            <!-- FULLNAME -->
+            <div class="form-group col-12 col-md-6 col-xl-4">
+              <input type="text" placeholder="Full Name" [(ngModel)]="details.guests.guest_name" name="fullname"
+                minlength="3" maxlength="15" class="w-full rounded-lg border px-3 py-2" />
             </div>
-          </div>
-          <!-- PHONE NUMBER -->
-          <div class="form-group col-12 col-md-6 col-xl-4">
-            <input type="tel" placeholder="Phone Number" name="phone"
-              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300" />
-          </div>
-          <!-- TOTAL NUMBER OF PERSON -->
-          <div class="form-group col-12 col-md-6 col-xl-4 text-start">
-            <div class="relative ">
-              <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
-                <i class="fa-solid fa-user text-muted"></i>
-              </span>
-              <select name="adults"
-                class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
-                <option value="">Total No. of Person</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <!-- Add more options as needed -->
-              </select>
+            <!-- VALIDATION FOR FULLNAME -->
+
+            <!-- EMAIL -->
+
+            <div class="form-group col-12 col-md-6 col-xl-4">
+              <div class="relative">
+                <input type="text" placeholder="Email" class="w-full rounded-lg border px-3 py-2 pl-10"
+                  [(ngModel)]="details.guests.guest_email">
+                <i class="fas fa-envelope absolute top-3 left-3 text-gray-400"></i>
+              </div>
+            </div>
+            <!-- PHONE NUMBER -->
+            <div class="form-group col-12 col-md-6 col-xl-4">
+              <input type="tel" placeholder="Phone Number" name="phone" [(ngModel)]="details.guests.guest_phone"
+                class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300" />
+            </div>
+            <!-- TOTAL NUMBER OF PERSON -->
+            <div class="form-group col-12 col-md-6 col-xl-4 text-start">
+              <div class="relative ">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                  <i class="fa-solid fa-user text-muted"></i>
+                </span>
+                <select name="adults" [(ngModel)]="details.guests.adults"
+                  class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+                  <option selected disabled value="">Total No. of Person</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <!-- Add more options as needed -->
+                </select>
+              </div>
+
+            </div>
+            <!-- TOTAL NUMBER OF CHILDRENS -->
+            <div class="form-group col-12 col-md-6 col-xl-4 text-start">
+              <div class="relative ">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                  <i class="fa-solid fa-child text-muted"></i>
+                </span>
+                <select name="adults" [(ngModel)]="details.guests.childrens"
+                  class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+                  <option selected disabled value="">Total No. of Childrens</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <!-- Add more options as needed -->
+                </select>
+              </div>
+
+            </div>
+            <div class="flex justify-end">
+              <button type="button" (click)="onReset()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg mr-2">
+                Clear
+              </button>
+              <button type="submit" (click)="postBookingData()"
+                class="px-4 py-2 text-black justify-center rounded-md bg-[#EEAC36] text-sm font-semibold leading-6 shadow-sm hover:bg-[#ffc107] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                Save & Proceed
+              </button>
             </div>
 
-          </div>
-          <!-- TOTAL NUMBER OF CHILDRENS -->
-          <div class="form-group col-12 col-md-6 col-xl-4 text-start">
-            <div class="relative ">
-              <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
-                <i class="fa-solid fa-child text-muted"></i>
-              </span>
-              <select name="adults"
-                class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
-                <option value="">Total No. of Childrens</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <!-- Add more options as needed -->
-              </select>
-            </div>
-
-          </div>
-          <div class="flex justify-end">
-            <button type="button" (click)="onReset()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg mr-2">
-              Clear
-            </button>
-            <button type="submit"
-              class="px-4 py-2 text-black justify-center rounded-md bg-[#EEAC36] text-sm font-semibold leading-6 shadow-sm hover:bg-[#ffc107] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-              Save & Proceed
-            </button>
-          </div>
-
-        </form>
+          </form>
+        </ng-container>
       </div>
     </details>
     <!-- PAYMENT OPTIONS -->
@@ -125,7 +154,7 @@
       <summary class="w-full bg-white text-dark flex justify-between px-4 py-3  after:content-['+']">
         <div class="flex justify-center items-center space-x-2">
           <i class="fa-solid fa-hourglass-end text-[#FFA500]"></i>
-          <p>Payment Options</p>
+          <p class="font-semibold">Payment Options</p>
         </div>
       </summary>
       <!-- Added From Here -->
