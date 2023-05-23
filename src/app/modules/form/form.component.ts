@@ -27,6 +27,9 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
     this.calculateTotalCostWithTax()
+    this.details.booking.room_category_id = ""
+    this.details.guests.adults = ""
+    this.details.guests.childrens = ""
   }
 
   // Validation for fullname
@@ -62,29 +65,7 @@ export class FormComponent implements OnInit {
 
   ]
 
-  // TOTAL PRICE CALCULATING THE TOTAL DAYS
-  // calculateTotalCostWithTax() {
-  //   const selectedRoom = this.details.booking.room_category_id;;
-  //   console.log(selectedRoom, 'SELECTED ROOM');
-  //   const noOfDays = this.totalDays;
-  //   console.log(noOfDays, 'TOTAL DAYS');
 
-  //   const room = this.roomDetails.find(room => room.categoryId === selectedRoom);
-  //   console.log(room, 'ROOM"S ID');
-  //   console.log(selectedRoom, 'Selected Room');
-  //   console.log(this.roomDetails, 'Room Details');
-
-
-  //   if (room) {
-  //     const roomAmount = room.amount;
-  //     const totalAmount = roomAmount * noOfDays
-  //     const taxAmount = totalAmount * this.TAX;
-  //     const totalCostWithTax = totalAmount + taxAmount
-
-  //     return totalCostWithTax
-  //   }
-  //   return 0;
-  // }
   // TOTAL PRICE CALCULATING THE TOTAL DAYS
   calculateTotalCostWithTax(): number | null {
     const selectedRoom = this.details.booking.room_category_id;
@@ -155,9 +136,18 @@ export class FormComponent implements OnInit {
     }
   }
 
+  getCurrentDate(): string {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
+    const day = ("0" + currentDate.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  }
+
 
 
   postBookingData() {
+
     const postObj: any = {
       booking: {
         booking_id: "",

@@ -48,10 +48,10 @@
 
               <td class="border px-4 py-2">
                 <input type="date" name="From" [(ngModel)]="details.booking.booking_date"
-                  (change)="calculateTotalDays()">
+                  (change)="calculateTotalDays()" [min]="getCurrentDate()">
               </td>
               <td class="border px-4 py-2">
-                <input type="date" name="To" [(ngModel)]="details.booking.booking_from" (change)="calculateTotalDays()">
+                <input type="date" name="To"  [(ngModel)]="details.booking.booking_from" (change)="calculateTotalDays()" [min]="getCurrentDate()"/>
 
               </td>
               <td class="border px-4 py-2">{{totalDays}}</td>
@@ -61,7 +61,9 @@
             </tr>
           </tbody>
         </table>
-        <small class="italic text-primary text-center block">Checkout - Before 12PM</small>
+        <small class="italic text-primary text-center block">Checkout {{ details.booking_till | date:'MM/dd/yyyy' }} - Before 12PM</small>
+        
+
       </div>
 
 
@@ -150,14 +152,13 @@
       </div>
     </details>
     <!-- PAYMENT OPTIONS -->
-    <details class="w-full border header-bg cursor-pointer mb-3 ">
+    <!-- <details class="w-full border header-bg cursor-pointer mb-3 ">
       <summary class="w-full bg-white text-dark flex justify-between px-4 py-3  after:content-['+']">
         <div class="flex justify-center items-center space-x-2">
           <i class="fa-solid fa-hourglass-end text-[#FFA500]"></i>
           <p class="font-semibold">Payment Options</p>
         </div>
       </summary>
-      <!-- Added From Here -->
 
       <div class="container space-x-2 py-5 bg-white">
 
@@ -177,6 +178,6 @@
         </div>
         <p class="text-muted text-center small"><small>powered by Razorpay</small></p>
       </div>
-    </details>
+    </details> -->
   </div>
 </div>
