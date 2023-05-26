@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CountryISO } from 'ngx-intl-tel-input';
+import { ApiService } from 'src/app/services/api.service';
 
 
 
@@ -25,8 +26,10 @@ export class FormComponent implements OnInit {
     { room_category_id: 2, room_category: 'Deluxe Room', price: 150 },
     { room_category_id: 3, room_category: 'Suite', price: 200 }
   ];
-  
-  constructor(private formBuilder: FormBuilder,private datePipe: DatePipe) { }
+  submitted = false;
+  showErrorAlert = false;
+  errorMsg:string="Error: Please fill in all the required fields correctly.";
+  constructor(private formBuilder: FormBuilder,private datePipe: DatePipe,private apiService: ApiService) { }
 
   ngOnInit() {
     this.initializeForm();
@@ -35,10 +38,12 @@ export class FormComponent implements OnInit {
   initializeForm() {
     this.bookingForm = this.formBuilder.group({
       guest_name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
-      guest_email: ['', [Validators.required, Validators.email]],
-      // guest_phone: ['', [Validators.required]],
+      // guest_email: ['', [Validators.required, Validators.email]],
+      guest_email: ['', [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]],
+      guest_phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       adults: ['', [Validators.required]],
       childrens: ['', [Validators.required]],
+      guest_address: ['', [Validators.required]],
       check_out: [this.getCurrentDate(), Validators.required],
       check_in: [this.getCurrentDate(), Validators.required],
       roomCategory:['', [Validators.required]],
@@ -56,6 +61,18 @@ export class FormComponent implements OnInit {
     return this.bookingForm.controls;
   }
 
+  onSubmit() {
+    this.submitted = true;
+    if (this.bookingForm.invalid) {
+      this.showErrorAlert = true;
+      this.apiService.handleLoginError(this.errorMsg);
+
+    } else {
+      // Form is valid, proceed with form submission
+      this.postBookingData();
+    }
+  }
+
   // Handle form submission
   postBookingData() {
     if (this.bookingForm.valid) {
@@ -71,13 +88,16 @@ export class FormComponent implements OnInit {
     this.bookingForm.reset({
       guest_name: '',
       guest_email: '',
-      // guest_phone: '',
+      guest_phone: '',
       adults: '',
       childrens: '',
       check_out:this.getCurrentDate(),
       check_in:this.getCurrentDate(),
-      roomCategory:''
+      roomCategory:'',
+      guest_address:''
     });
+    this.submitted = false;
+    this.showErrorAlert = false;
   }
 
   

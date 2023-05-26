@@ -11,6 +11,10 @@
       </p>
     </div>
 
+    <!-- <div class="alert alert-danger w-full text-white text-center bg-red-500 p-2"  *ngIf="showErrorAlert && (submitted || bookingForm.invalid)" >
+      Error: Please fill in all the required fields correctly.
+    </div> -->
+
     <section>
       <div class="w-full border cursor-pointer header-bg">
         <div class="flex justify-center items-center space-x-2 py-2">
@@ -25,24 +29,27 @@
 
       <!-- //FormStart -->
 
-      <form [formGroup]="bookingForm" class="bg-white p-4" (ngSubmit)="bookingForm.valid && postBookingData()">
+      <form [formGroup]="bookingForm" class="bg-white p-4" (ngSubmit)="onSubmit()">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      
+
           <div class="form-group">
             <label for="guest_name" class="block mb-1 text-sm font-medium text-gray-700">Full Name</label>
             <div class="relative">
-              <input type="text" id="guest_name" placeholder="Enter Full Name" formControlName="guest_name" minlength="3" maxlength="15"
-                class="w-full rounded-lg border px-3 py-2 pl-10" />
+              <input type="text" id="guest_name" placeholder="Enter Full Name" formControlName="guest_name"
+                minlength="3" maxlength="15" class="w-full rounded-lg border px-3 py-2 pl-10" />
               <i class="fas fa-user absolute top-3 left-3 text-gray-400"></i>
             </div>
-            <div *ngIf="formControls['guest_name'].invalid && (formControls['guest_name'].dirty || formControls['guest_name'].touched)"
+            <div
+              *ngIf="formControls['guest_name'].invalid && (formControls['guest_name'].dirty || formControls['guest_name'].touched)"
               class="text-red-500">
               <div *ngIf="formControls['guest_name'].errors?.['required']">Full Name is required.</div>
-              <div *ngIf="formControls['guest_name'].errors?.['minlength']">Minimum length of 3 characters is required.</div>
-              <div *ngIf="formControls['guest_name'].errors?.['maxlength']">Maximum length of 15 characters exceeded.</div>
+              <div *ngIf="formControls['guest_name'].errors?.['minlength']">Minimum length of 3 characters is required.
+              </div>
+              <div *ngIf="formControls['guest_name'].errors?.['maxlength']">Maximum length of 15 characters exceeded.
+              </div>
             </div>
           </div>
-      
+
           <div class="form-group">
             <label for="guest_email" class="block mb-1 text-sm font-medium text-gray-700">Email</label>
             <div class="relative">
@@ -50,13 +57,14 @@
                 class="w-full rounded-lg border px-3 py-2 pl-10" />
               <i class="fas fa-envelope absolute top-3 left-3 text-gray-400"></i>
             </div>
-            <div *ngIf="formControls['guest_email'].invalid && (formControls['guest_email'].dirty || formControls['guest_email'].touched)"
+            <div
+              *ngIf="formControls['guest_email'].invalid && (formControls['guest_email'].dirty || formControls['guest_email'].touched)"
               class="text-red-500">
               <div *ngIf="formControls['guest_email'].errors?.['required']">Email is required.</div>
-              <div *ngIf="formControls['guest_email'].errors?.['email']">Invalid email format.</div>
+              <div *ngIf="formControls['guest_email'].errors?.['pattern']">Invalid email format.</div>
             </div>
           </div>
-      
+
           <div class="form-group">
             <label for="adults" class="block mb-1 text-sm font-medium text-gray-700">Total No. of Adults</label>
             <div class="relative">
@@ -71,12 +79,13 @@
                 <option value="3">3</option>
               </select>
             </div>
-            <div *ngIf="formControls['adults'].invalid && (formControls['adults'].dirty || formControls['adults'].touched)"
+            <div
+              *ngIf="formControls['adults'].invalid && (formControls['adults'].dirty || formControls['adults'].touched)"
               class="text-red-500">
               <div *ngIf="formControls['adults'].errors?.['required']">Total No. of Adults is required.</div>
             </div>
           </div>
-      
+
           <div class="form-group">
             <label for="childrens" class="block mb-1 text-sm font-medium text-gray-700">Total No. of Children</label>
             <div class="relative">
@@ -91,26 +100,59 @@
                 <option value="3">3</option>
               </select>
             </div>
-            <div *ngIf="formControls['childrens'].invalid && (formControls['childrens'].dirty || formControls['childrens'].touched)"
+            <div
+              *ngIf="formControls['childrens'].invalid && (formControls['childrens'].dirty || formControls['childrens'].touched)"
               class="text-red-500">
               <div *ngIf="formControls['childrens'].errors?.['required']">Total No. of Children is required.</div>
             </div>
           </div>
-      
+
+
+          <div class="form-group">
+            <label for="guest_address" class="block mb-1 text-sm font-medium text-gray-700">Address</label>
+            <div class="relative">
+              <input type="text" id="guest_address" placeholder="Enter Address" formControlName="guest_address"
+                class="w-full rounded-lg border px-3 py-2 pl-10" />
+              <i class="fas fa-map-marker-alt absolute top-3 left-3 text-gray-400"></i>
+            </div>
+            <div
+              *ngIf="formControls['guest_address'].invalid && (formControls['guest_address'].dirty || formControls['guest_address'].touched)"
+              class="text-red-500">
+              <div *ngIf="formControls['guest_address'].errors?.['required']">Address is required.</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="guest_phone" class="block mb-1 text-sm font-medium text-gray-700">Phone</label>
+            <div class="relative">
+              <input type="text" id="guest_phone" placeholder="Enter Phone" formControlName="guest_phone"
+                class="w-full rounded-lg border px-3 py-2 pl-10" />
+              <i class="fas fa-phone absolute top-3 left-3 text-gray-400"></i>
+            </div>
+            <div
+              *ngIf="formControls['guest_phone'].invalid && (formControls['guest_phone'].dirty || formControls['guest_phone'].touched)"
+              class="text-red-500">
+              <div *ngIf="formControls['guest_phone'].errors?.['required']">Phone is required.</div>
+              <div *ngIf="formControls['guest_phone'].errors?.['pattern']">Invalid phone format.</div>
+            </div>
+          </div>
+          
+
+
           <div class="col-span-1 md:col-span-2 lg:col-span-3 flex justify-end">
             <button type="button" (click)="onReset()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg mr-2">
               Clear
             </button>
-            <button type="submit" [disabled]="bookingForm.invalid || bookingForm.pending"
+            <button type="submit"
               class="px-4 py-2 text-black justify-center rounded-md bg-[#EEAC36] text-sm font-semibold leading-6 shadow-sm hover:bg-[#ffc107] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
               Save & Proceed
             </button>
           </div>
-          
-      
+
+
         </div>
       </form>
-      
+
 
 
 
@@ -123,7 +165,8 @@
         </div>
       </div>
 
-      <form [formGroup]="bookingForm" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 bg-white p-4" (ngSubmit)="bookingForm.valid && postBookingData()">
+      <form [formGroup]="bookingForm" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 bg-white p-4"
+        (ngSubmit)="onSubmit()">
 
         <div class="form-group col-span-1 md:col-span-1 xl:col-span-1">
           <label for="check_in" class="block mb-1 text-sm font-medium text-gray-700">Check-in</label>
@@ -133,13 +176,14 @@
               min="{{ getCurrentDate() }}" [value]="getCurrentDate()" />
             <i class="fas fa-calendar-alt absolute top-3 left-3 text-gray-400"></i>
           </div>
-          <div *ngIf="formControls['check_in'].invalid && (formControls['check_in'].dirty || formControls['check_in'].touched)"
+          <div
+            *ngIf="formControls['check_in'].invalid && (formControls['check_in'].dirty || formControls['check_in'].touched)"
             class="text-red-500">
             <div *ngIf="formControls['check_in'].errors?.['required']">Check-in date is required.</div>
           </div>
         </div>
-      
-      
+
+
         <div class="form-group col-span-1 md:col-span-1 xl:col-span-1">
           <label for="check_out" class="block mb-1 text-sm font-medium text-gray-700">Check-out</label>
           <div class="relative">
@@ -148,14 +192,15 @@
               min="{{ getCurrentDate() }}" [value]="getCurrentDate()" />
             <i class="fas fa-calendar-alt absolute top-3 left-3 text-gray-400"></i>
           </div>
-          <div *ngIf="formControls['check_out'].invalid && (formControls['check_out'].dirty || formControls['check_out'].touched)"
+          <div
+            *ngIf="formControls['check_out'].invalid && (formControls['check_out'].dirty || formControls['check_out'].touched)"
             class="text-red-500">
             <div *ngIf="formControls['check_out'].errors?.['required']">Check-out date is required.</div>
           </div>
         </div>
-      
-      
-      
+
+
+
         <div class="form-group col-span-1 md:col-span-1 xl:col-span-1 text-start">
           <label for="room-category" class="block mb-1 text-sm font-medium text-gray-700">Room Category</label>
           <div class="relative">
@@ -170,14 +215,15 @@
               </option>
             </select>
           </div>
-          <div *ngIf="formControls['roomCategory'].invalid && (formControls['roomCategory'].dirty || formControls['roomCategory'].touched)"
+          <div
+            *ngIf="formControls['roomCategory'].invalid && (formControls['roomCategory'].dirty || formControls['roomCategory'].touched)"
             class="text-red-500">
             <div *ngIf="formControls['roomCategory'].errors?.['required']">Room Category is required.</div>
           </div>
         </div>
-      
+
       </form>
-      
+
       <!-- //FormEnd -->
 
 
@@ -186,6 +232,3 @@
 
   </div>
 </section>
-
-
-
