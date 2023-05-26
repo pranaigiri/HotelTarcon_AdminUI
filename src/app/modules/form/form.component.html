@@ -16,7 +16,7 @@
     </div> -->
 
     <!-- <section class="col-span-1 md:col-span-2 p-4" *ngIf="bookingForm.valid && submitted && isFormSubmittedSuccessfully"> -->
-    <section class="col-span-1 md:col-span-2 p-4 lg:w-1/2 mx-auto md:w-full sm:w-full" >
+    <section class="col-span-1 md:col-span-2 p-4 lg:w-1/2 mx-auto md:w-full sm:w-full"  *ngIf="bookingForm.valid && submitted && isFormSubmittedSuccessfully">
       <div class="w-full border cursor-pointer header-bg">
         <div class="flex justify-center items-center space-x-2 py-2">
           <i class="fa-solid fa-hourglass-end text-[#FFA500]"></i>
