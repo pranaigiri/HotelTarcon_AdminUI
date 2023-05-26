@@ -1,76 +1,132 @@
-<div class="container mx-auto px-4">
-  <section class="my-6">
+<!-- <div class="container mx-auto px-4"> -->
+  <!-- <section class="my-6 flex justify-end">
+    <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded ">
+      <i class="fa fa-sign-out-alt mr-2"></i>
+      Logout
+    </button>
+  </section> -->
+  
+  
+  <section class="my-6 ">
     <div>
-      <h3 class="font-semibold leading-6 text-3xl text-gray-900">Title</h3>
+      <h3 class="font-semibold leading-6 text-3xl text-gray-900">Dashboard</h3>
+      <!-- Note Section -->
+      <div class="py-4 rounded-md mb-10">
+        <p class="text-sm text-gray-700">
+          <span class="font-bold"><i class="fa fa-info-circle text-blue-700 pr-1"></i>Note:</span> This screen provides
+          an overview of key metrics, such as booking counts, guest details, and more. Use the
+          table to visualize and analyze data efficiently.
+        </p>
+      </div>
+
+      
       <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
-        <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-          <dt class="truncate text-sm font-medium text-gray-500">Total Guests</dt>
-          <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">71,897</dd>
+        <div
+          class="overflow-hidden rounded-lg bg-white shadow-sm transition-all duration-300 transform hover:scale-105">
+          <div class="p-6 flex items-center">
+            <div class="rounded bg-[#FFA500] p-3 mr-4">
+              <i class="fa fa-users rounded text-white"></i>
+            </div>
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Total Bookings</dt>
+              <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{this.keyMetrics.bookingcount }}
+              </dd>
+            </div>
+          </div>
         </div>
-        <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-          <dt class="truncate text-sm font-medium text-gray-500">Avg. Online Bookings</dt>
-          <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">58.16%</dd>
+        <!-- Add similar card elements for other items -->
+        <div class="overflow-hidden rounded-lg bg-white shadow-sm transition-all duration-300 transform hover:scale-105">
+          <div class="p-6 flex items-center">
+            <div class="rounded bg-[#FFA500] p-3 mr-4">
+              <i class="fa fa-users rounded text-white"></i>
+            </div>
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Total Guests</dt>
+              <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{this.keyMetrics.guesttotalsum}}</dd>
+            </div>
+          </div>
         </div>
-        <div class="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-          <dt class="truncate text-sm font-medium text-gray-500">Avg. Offline Bookings</dt>
-          <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">24.57%</dd>
+        <!-- Add similar card elements for other items -->
+        <div
+          class="overflow-hidden rounded-lg bg-white shadow-sm transition-all duration-300 transform hover:scale-105">
+          <div class="p-6 flex items-center">
+            <div class="rounded bg-[#FFA500] p-3 mr-4">
+              <i class="fa fa-users rounded text-white"></i>
+            </div>
+            <div>
+              <dt class="text-sm font-medium text-gray-500">Payment in Total</dt>
+              <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{this.keyMetrics.sum_totalamount}}</dd>
+            </div>
+          </div>
         </div>
+        <!-- Add similar card elements for other items -->
       </dl>
     </div>
   </section>
+
   <section class="my-6">
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <div class="relative overflow-x-auto">
+      <table
+        class="w-full text-sm text-left text-gray-500 dark:text-gray-400 border border-gray-300 dark:border-gray-700 shadow-md sm:rounded-lg">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th class="px-6 py-3 text-right" *ngFor="let header of tableHeader">
-              {{header}}
+            <th class="px-6 py-3 text-center border-b dark:border-gray-700">
+              {{tableHeader[0]}}
             </th>
+            <ng-container *ngFor="let header of tableHeader.slice(1)">
+              <th class="px-6 py-3 text-left border-b dark:border-gray-700">
+                {{header}}
+              </th>
+            </ng-container>
           </tr>
         </thead>
         <tbody>
-          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-          *ngFor="let booking of bookingsData"
-          >
-            <!-- BOOKING ID -->
-            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-left">
-              {{booking.booking.booking_id}}
-            </th>
-            <!-- GUEST NAME -->
-            <td class="px-6 py-4">
-              {{ booking.guests.guest_name }}
-            </td>
-            <!-- STATUS -->
-            <td class="px-6 py-4">
-              {{booking.booking.booking_status}}
-            </td>
-            <!-- BOOKING DATE -->
-            <td class="px-6 py-4">
-              {{booking.booking.booking_from}}
-            </td>
-            <!-- CHECK-IN -->
-            <td class="px-6 py-4">
-              {{ booking.booking.booking_till }}
-            </td>
-            <!-- CHECK-OUT -->
-            <td class="px-6 py-4">
-              {{ booking.payment.payment_status }}
-            </td>
-            <!-- BOOKING MODE -->
-            <td class="px-6 py-4">
-              {{booking.booking.booking_mode}}
-            </td>
-            <!-- TOTAL GUEST -->
-            <td class="px-6 py-4">
-              {{booking.guests.guest_total}}
-            </td>
-            
-            <td class="px-6 py-4 text-right">
-              <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-            </td>
-          </tr>
+          <ng-container *ngFor="let booking of bookingsData; let even = even">
+            <tr
+              class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700">
+              <!-- BOOKING ID -->
+              <td
+                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b dark:border-gray-700">
+                {{booking.booking.booking_id}}
+              </td>
+              <!-- GUEST NAME -->
+              <td class="px-6 py-4 border-b dark:border-gray-700">
+                {{booking.guests.guest_name}}
+              </td>
+              <!-- STATUS -->
+              <td class="px-6 py-4 border-b dark:border-gray-700">
+                {{booking.booking.booking_status}}
+              </td>
+              <!-- BOOKING DATE -->
+              <td class="px-6 py-4 border-b dark:border-gray-700">
+                {{booking.booking.booking_from | date:'yyyy-MM-dd'}}
+              </td>
+              <!-- CHECK-IN -->
+              <td class="px-6 py-4 border-b dark:border-gray-700">
+                {{booking.booking.booking_till | date:'yyyy-MM-dd'}}
+              </td>
+              <!-- CHECK-OUT -->
+              <td class="px-6 py-4 border-b dark:border-gray-700">
+                {{booking.payment.payment_status}}
+              </td>
+              <!-- BOOKING MODE -->
+              <td class="px-6 py-4 border-b dark:border-gray-700">
+                {{booking.booking.booking_mode}}
+              </td>
+              <!-- TOTAL GUEST -->
+              <td class="px-6 py-4 border-b dark:border-gray-700">
+                {{booking.guests.guest_total}}
+              </td>
+              <td class="px-6 py-4 text-center border-b dark:border-gray-700">
+                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+              </td>
+            </tr>
+          </ng-container>
         </tbody>
       </table>
     </div>
   </section>
-</div>
+
+
+
+<!-- </div> -->

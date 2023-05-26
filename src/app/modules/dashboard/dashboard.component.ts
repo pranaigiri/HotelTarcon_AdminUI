@@ -11,12 +11,16 @@ export class DashboardComponent implements OnInit {
   //  table headers
   tableHeader :any=[];
   // table data
-  bookingsData: any = []
+  bookingsData: any = [];
+  keyMetrics:any={
+    guesttotalsum:0,bookingcount:0,sum_totalamount:0
+  }
 
 
   constructor(private apiService:ApiService) {
     this.tableHeader = ["Booking Id","Guest Name","Status","Booking Date","Check-in","Check-out","Booking Mode","Total Guest","Option"];
     this.GetAllBookings();
+    this.GetKeyMetrics();
    }
 
 
@@ -27,6 +31,15 @@ export class DashboardComponent implements OnInit {
     this.apiService.getData("Booking/GetAllBookings").subscribe((res:any)=>{
       this.bookingsData = res.result.data
       console.log(this.bookingsData)
+    })
+  }
+
+
+  GetKeyMetrics(){
+    this.apiService.getData("Booking/getkeymetrics").subscribe((res:any)=>{
+      this.keyMetrics.bookingcount = res.result.bookingcount
+      this.keyMetrics.guesttotalsum = res.result.guesttotalsum
+      this.keyMetrics.sum_totalamount = res.result.sum_totalamount
     })
   }
 

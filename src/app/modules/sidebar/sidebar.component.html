@@ -1,0 +1,74 @@
+<!-- sidebar.component.html -->
+
+<div class="flex h-screen">
+  <!-- Sidebar -->
+  <div [ngClass]="{'hidden': isSidebarHidden, 'block lg:block': !isSidebarHidden}"
+    class="bg-gray-900 text-gray-100 md:w-1/3 lg:w-1/5 xl:w-1/6 sm:w-1/2 overflow-y-auto"
+    [ngClass]="{'fixed inset-y-0 left-0 z-50': isMobile && enableSidebarOverlay}">
+    <!-- Sidebar content goes here -->
+    <!-- Sidebar content goes here -->
+    <ul class="py-4">
+      <!-- Logo -->
+      <div class="py-4 px-6 text-center">
+        <!-- Title -->
+        <img class="tarcon-logo mx-auto h-full md:w-1/2 lg:w-1/2 xl:w-1/2 sm:w-1/2 p-0" src={{logoUrl}}
+          alt="tarcon_logo" />
+        <h1 class="text-2xl font-bold mb-6">Hotel Tarcon</h1>
+        <!-- Logo -->
+      </div>
+
+      <!-- Menu Items -->
+      <li class="py-2 mb-2 px-6 hover:bg-[#EEAC36]"  routerLink="/admin/dashboard">
+        <a class="flex items-center" >
+          <!-- Icon -->
+          <span class="inline-block w-6 h-6 mr-3">
+            <i class="fas fa-home"></i>
+          </span>
+          Home
+        </a>
+      </li>
+      <li class="py-2 mb-2 px-6 hover:bg-[#EEAC36]"   routerLink="/admin/form">
+        <a class="flex items-center" >
+          <!-- Icon -->
+          <span class="inline-block w-6 h-6 mr-3">
+            <i class="fas fa-plus"></i>
+          </span>
+          Add New Booking
+        </a>
+      </li>
+      <!-- More menu items... -->
+    </ul>
+  </div>
+
+  <!-- Toggle button -->
+  <button class="lg:hidden fixed top-4 right-4 z-50 p-2 rounded-md bg-gray-900 text-gray-100" (click)="toggleSidebar()">
+    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path *ngIf="isSidebarHidden" d="M4 6h16M4 12h8m-8 6h16"></path>
+      <path *ngIf="!isSidebarHidden" d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+  </button>
+
+
+
+  <!-- Main content -->
+  <div class="flex-1 bg-gray-100 overflow-y-auto">
+
+
+    <div class="container mx-auto px-4">
+      <section class="my-6 flex justify-end">
+        <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" (click)="logout()">
+          <i class="fa fa-sign-out-alt mr-2"></i>
+          Logout
+        </button>
+      </section>
+    </div>
+
+    <div class="container mx-auto px-4">
+    <router-outlet></router-outlet>
+    </div>
+    
+  </div>
+
+
+</div>

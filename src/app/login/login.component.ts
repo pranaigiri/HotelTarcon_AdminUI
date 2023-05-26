@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       this.apiService.login(this.url, this.credentials, this.errorMsg).subscribe((res: any) => {
         console.log("Authenticated !");
         this.authService.storeAuthenticationToken(res.result.toString());
-        this.router.navigate(["/form"]);
+        this.router.navigate(["admin/dashboard"]);
       });
 
     }
