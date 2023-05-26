@@ -15,53 +15,63 @@
       Error: Please fill in all the required fields correctly.
     </div> -->
 
-    <section class="col-span-1 md:col-span-2 p-4" *ngIf="bookingForm.valid && submitted" >
-      
+    <!-- <section class="col-span-1 md:col-span-2 p-4" *ngIf="bookingForm.valid && submitted && isFormSubmittedSuccessfully"> -->
+    <section class="col-span-1 md:col-span-2 p-4 lg:w-1/2 mx-auto md:w-full sm:w-full" >
       <div class="w-full border cursor-pointer header-bg">
         <div class="flex justify-center items-center space-x-2 py-2">
           <i class="fa-solid fa-hourglass-end text-[#FFA500]"></i>
-          <p class="font-semibold text-gray-800">Summary</p>
+          <p class="font-semibold text-gray-800">Overview of Provided Details</p>
         </div>
       </div>
       <div class="bg-white p-4">
-      <div  class="grid grid-cols-2 gap-2">
-        <div class="col-span-1">
-          <label for="guest_name" class="block mb-1 text-sm font-medium text-blue-700">Full Name : <span class="text-gray-900">{{ bookingForm.controls['guest_name'].value }}</span></label>
-        </div>
-        <div class="col-span-1">
-          <p class="font-semibold text-blue-700">Guest Email: <span class="text-gray-900">{{ bookingForm.controls['guest_email'].value }}</span></p>
-        </div>
-        <div class="col-span-1">
-          <p class="font-semibold text-blue-300">Guest Phone: <span class="text-gray-900">{{ bookingForm.controls['guest_phone'].value }}</span></p>
-        </div>
-        <div class="col-span-1">
-          <p class="font-semibold text-blue-700">Adults: <span class="text-gray-900">{{ bookingForm.controls['adults'].value }}</span></p>
-        </div>
-        <div class="col-span-1">
-          <p class="font-semibold text-blue-700">Children: <span class="text-gray-900">{{ bookingForm.controls['childrens'].value }}</span></p>
-        </div>
-        <div class="col-span-1">
-          <p class="font-semibold text-blue-700">Check-in Date: <span class="text-gray-900">{{ bookingForm.controls['check_in'].value }}</span></p>
-        </div>
-        <div class="col-span-1">
-          <p class="font-semibold text-blue-700">Check-out Date: <span class="text-gray-900">{{ bookingForm.controls['check_out'].value }}</span></p>
-        </div>
-        <div class="col-span-1">
-          <p class="font-semibold text-blue-700">Room Category: <span class="text-gray-900">{{ bookingForm.controls['roomCategory'].value }}</span></p>
-        </div>
-        <div class="col-span-2">
-          <p class="font-semibold text-blue-700">Guest Address: <span class="text-gray-900">{{ bookingForm.controls['guest_address'].value }}</span></p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="guest_name" class="block mb-1 text-sm font-medium text-blue-700">Full Name:</label>
+            <span class="text-gray-900">{{ bookingForm.controls['guest_name'].value }}</span>
+          </div>
+          <div>
+            <label for="guest_email" class="block mb-1 text-sm font-medium text-blue-700">Guest Email:</label>
+            <span class="text-gray-900">{{ bookingForm.controls['guest_email'].value }}</span>
+          </div>
+          <div>
+            <label for="guest_phone" class="block mb-1 text-sm font-medium text-blue-700">Guest Phone:</label>
+            <span class="text-gray-900">{{ bookingForm.controls['guest_phone'].value }}</span>
+          </div>
+          <div>
+            <label for="adults" class="block mb-1 text-sm font-medium text-blue-700">Adults:</label>
+            <span class="text-gray-900">{{ bookingForm.controls['adults'].value }}</span>
+          </div>
+          <div>
+            <label for="childrens" class="block mb-1 text-sm font-medium text-blue-700">Children:</label>
+            <span class="text-gray-900">{{ bookingForm.controls['childrens'].value }}</span>
+          </div>
+          <div>
+            <label for="check_in" class="block mb-1 text-sm font-medium text-blue-700">Check-in Date:</label>
+            <span class="text-gray-900">{{ bookingForm.controls['check_in'].value }}</span>
+          </div>
+          <div>
+            <label for="check_out" class="block mb-1 text-sm font-medium text-blue-700">Check-out Date:</label>
+            <span class="text-gray-900">{{ bookingForm.controls['check_out'].value }}</span>
+          </div>
+          <div>
+            <label for="roomCategory" class="block mb-1 text-sm font-medium text-blue-700">Room Category:</label>
+            <span class="text-gray-900">{{ bookingForm.controls['roomCategory'].value }}</span>
+          </div>
+          <div class="col-span-2">
+            <label for="guest_address" class="block mb-1 text-sm font-medium text-blue-700">Guest Address:</label>
+            <span class="text-gray-900">{{ bookingForm.controls['guest_address'].value }}</span>
+          </div>
         </div>
       </div>
-    </div>
     </section>
     
     
     
     
+    
 
 
-    <section *ngIf="!bookingForm.valid || !submitted">
+    <section *ngIf="!bookingForm.valid || !submitted || !isFormSubmittedSuccessfully">
       <div class="w-full border cursor-pointer header-bg">
         <div class="flex justify-center items-center space-x-2 py-2">
           <i class="fa-solid fa-hourglass-end text-[#FFA500]"></i>

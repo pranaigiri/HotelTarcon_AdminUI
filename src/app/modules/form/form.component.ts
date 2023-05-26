@@ -1,16 +1,9 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CountryISO } from 'ngx-intl-tel-input';
 import { ApiService } from 'src/app/services/api.service';
 
 
-
-  // Email validator using regex pattern
-  export function emailValidator(control: FormControl): { [key: string]: any } | null {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(control.value) ? null : { invalidEmail: true };
-  }
   
 
 @Component({
@@ -29,6 +22,7 @@ export class FormComponent implements OnInit {
   submitted = false;
   showErrorAlert = false;
   errorMsg:string="Error: Please fill in all the required fields correctly.";
+  isFormSubmittedSuccessfully:boolean=false;
   constructor(private formBuilder: FormBuilder,private datePipe: DatePipe,private apiService: ApiService) { }
 
   ngOnInit() {
@@ -62,8 +56,10 @@ export class FormComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isFormSubmittedSuccessfully=false;
     this.submitted = true;
     if (this.bookingForm.invalid) {
+      this.submitted = false;
       this.showErrorAlert = true;
       this.apiService.handleLoginError(this.errorMsg);
 
@@ -76,8 +72,43 @@ export class FormComponent implements OnInit {
   // Handle form submission
   postBookingData() {
     if (this.bookingForm.valid) {
-      alert("Valid")
+      
+      console.log("Form Valid !");
+
+      //Initialising Data
+      let postObj: any ={
+        booking_id: 'asdasd',
+        booking_date: new Date(),
+        // booking_from: this.bookingForm.value.check_in,
+        booking_from: new Date(),
+        booking_till: new Date(),
+        // booking_till: this.bookingForm.value.check_out,
+        room_category_id: this.bookingForm.value.room_category_id,
+        booking_mode: 'offline',
+        total_amount: 20,
+        paid_amount: 0,
+        due_amount: 0,
+        payment_status: 'Paid',
+        upi_id: 'cbpankajrawat@ybl',
+        guest_id: 0,
+        guest_name: this.bookingForm.value.guest_name,
+        guest_phone: this.bookingForm.value.guest_phone,
+        guest_address: this.bookingForm.value.guest_address,
+        guest_email: this.bookingForm.value.guest_email,
+        guest_total: this.bookingForm.value.adults+this.bookingForm.value.childrens,
+        adults: this.bookingForm.value.adults,
+        childrens: this.bookingForm.value.childrens
+      };
+      this.apiService.postData("Booking/OfflineBooking",postObj).subscribe((res:any)=>{
+        console.log("Response Success !");
+        this.isFormSubmittedSuccessfully=true;
+      },
+      (error:any)=>{
+        this.isFormSubmittedSuccessfully=false;
+      })
       // Form is valid, proceed with saving data
+
+
     } else {
       alert("InValid")
       // Form is invalid, handle errors or display validation messages
