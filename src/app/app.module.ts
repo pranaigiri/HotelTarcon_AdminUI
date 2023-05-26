@@ -8,7 +8,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './helpers/tokeninterceptor.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { FormComponent } from './modules/form/form.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
@@ -45,7 +45,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatNativeDateModule,
     MatIconModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
+  providers: [DatePipe,{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

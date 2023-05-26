@@ -16,7 +16,7 @@
         <div class="flex justify-center items-center space-x-2 py-2">
           <i class="fa-solid fa-hourglass-end text-[#FFA500]"></i>
           <p class="font-semibold">
-            Order Summary
+            Guest Details
           </p>
         </div>
       </div>
@@ -25,124 +25,159 @@
 
       <!-- //FormStart -->
 
-      <form [formGroup]="bookingForm" class="grid grid-cols-3 gap-4 bg-white p-4">
-
-        <div class="form-group col-12 col-md-6 col-xl-4">
-          <div class="relative">
-            <input type="text" placeholder="Full Name" formControlName="guest_name" minlength="3" maxlength="15"
-              class="w-full rounded-lg border px-3 py-2 pl-10" />
-            <i class="fas fa-user absolute top-3 left-3 text-gray-400"></i>
+      <form [formGroup]="bookingForm" class="bg-white p-4" (ngSubmit)="bookingForm.valid && postBookingData()">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      
+          <div class="form-group">
+            <label for="guest_name" class="block mb-1 text-sm font-medium text-gray-700">Full Name</label>
+            <div class="relative">
+              <input type="text" id="guest_name" placeholder="Enter Full Name" formControlName="guest_name" minlength="3" maxlength="15"
+                class="w-full rounded-lg border px-3 py-2 pl-10" />
+              <i class="fas fa-user absolute top-3 left-3 text-gray-400"></i>
+            </div>
+            <div *ngIf="formControls['guest_name'].invalid && (formControls['guest_name'].dirty || formControls['guest_name'].touched)"
+              class="text-red-500">
+              <div *ngIf="formControls['guest_name'].errors?.['required']">Full Name is required.</div>
+              <div *ngIf="formControls['guest_name'].errors?.['minlength']">Minimum length of 3 characters is required.</div>
+              <div *ngIf="formControls['guest_name'].errors?.['maxlength']">Maximum length of 15 characters exceeded.</div>
+            </div>
           </div>
-          <div
-            *ngIf="formControls['guest_name'].invalid && (formControls['guest_name'].dirty || formControls['guest_name'].touched)"
-            class="text-red-500">
-            <div *ngIf="formControls['guest_name'].errors?.['required']">Full Name is required.</div>
-            <div *ngIf="formControls['guest_name'].errors?.['minlength']">Minimum length of 3 characters is required.</div>
-            <div *ngIf="formControls['guest_name'].errors?.['maxlength']">Maximum length of 15 characters exceeded.</div>
+      
+          <div class="form-group">
+            <label for="guest_email" class="block mb-1 text-sm font-medium text-gray-700">Email</label>
+            <div class="relative">
+              <input type="text" id="guest_email" placeholder="Enter Email" formControlName="guest_email"
+                class="w-full rounded-lg border px-3 py-2 pl-10" />
+              <i class="fas fa-envelope absolute top-3 left-3 text-gray-400"></i>
+            </div>
+            <div *ngIf="formControls['guest_email'].invalid && (formControls['guest_email'].dirty || formControls['guest_email'].touched)"
+              class="text-red-500">
+              <div *ngIf="formControls['guest_email'].errors?.['required']">Email is required.</div>
+              <div *ngIf="formControls['guest_email'].errors?.['email']">Invalid email format.</div>
+            </div>
           </div>
+      
+          <div class="form-group">
+            <label for="adults" class="block mb-1 text-sm font-medium text-gray-700">Total No. of Adults</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                <i class="fa-solid fa-user text-muted"></i>
+              </span>
+              <select id="adults" formControlName="adults"
+                class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+                <option selected disabled value="">Total No. of Adults</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+            <div *ngIf="formControls['adults'].invalid && (formControls['adults'].dirty || formControls['adults'].touched)"
+              class="text-red-500">
+              <div *ngIf="formControls['adults'].errors?.['required']">Total No. of Adults is required.</div>
+            </div>
+          </div>
+      
+          <div class="form-group">
+            <label for="childrens" class="block mb-1 text-sm font-medium text-gray-700">Total No. of Children</label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                <i class="fa-solid fa-child text-muted"></i>
+              </span>
+              <select id="childrens" formControlName="childrens"
+                class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+                <option selected disabled value="">Total No. of Children</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+            <div *ngIf="formControls['childrens'].invalid && (formControls['childrens'].dirty || formControls['childrens'].touched)"
+              class="text-red-500">
+              <div *ngIf="formControls['childrens'].errors?.['required']">Total No. of Children is required.</div>
+            </div>
+          </div>
+      
+          <div class="col-span-1 md:col-span-2 lg:col-span-3 flex justify-end">
+            <button type="button" (click)="onReset()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg mr-2">
+              Clear
+            </button>
+            <button type="submit" [disabled]="bookingForm.invalid || bookingForm.pending"
+              class="px-4 py-2 text-black justify-center rounded-md bg-[#EEAC36] text-sm font-semibold leading-6 shadow-sm hover:bg-[#ffc107] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              Save & Proceed
+            </button>
+          </div>
+          
+      
         </div>
-
-        
-        
-
-        <div class="form-group col-12 col-md-6 col-xl-4">
-          <div class="relative">
-            <input type="text" placeholder="Email" formControlName="guest_email"
-              class="w-full rounded-lg border px-3 py-2 pl-10" />
-            <i class="fas fa-envelope absolute top-3 left-3 text-gray-400"></i>
-          </div>
-          <div
-            *ngIf="formControls['guest_email'].invalid && (formControls['guest_email'].dirty || formControls['guest_email'].touched)"
-            class="text-red-500">
-            <div *ngIf="formControls['guest_email'].errors?.['required']">Email is required.</div>
-            <div *ngIf="formControls['guest_email'].errors?.['email']">Invalid email format.</div>
-          </div>
-        </div>
-
-        <!-- <div class="form-group col-12 col-md-6 col-xl-4">
-          <mat-form-field appearance="fill" class="w-full">
-            <input matInput [matDatepicker]="datePicker" placeholder="Select Dates" formControlName="booking_dates"
-              class="rounded-lg" readonly [class.active]="isDatePickerOpen">
-            <mat-datepicker-toggle matSuffix [for]="datePicker" (click)="toggleDatePicker()">
-              <button mat-icon-button>
-                <mat-icon>calendar_today</mat-icon>
-              </button>
-            </mat-datepicker-toggle>
-            <mat-datepicker #datePicker></mat-datepicker>
-          </mat-form-field>
-          <div *ngIf="formControls['booking_dates'].invalid && (formControls['booking_dates'].dirty || formControls['booking_dates'].touched)"
-            class="text-red-500">
-            <div *ngIf="formControls['booking_dates'].errors?.['required']">Booking dates are required.</div>
-          </div>
-        </div> -->
-        
-        
-        
-
-        <!-- <div class="form-group col-12 col-md-6 col-xl-4">
-            <ngx-intl-tel-input [enableAutoCountrySelect]="true" [enablePlaceholder]="true" [searchCountryFlag]="true"
-              [phoneValidation]="true" [preferredCountries]="preferredCountries" [selectedCountryISO]="CountryISO.India"
-              [maxLength]="15" [separateDialCode]="true" formControlName="guest_phone"
-              placeholder="Phone Number">
-            </ngx-intl-tel-input>
-        </div> -->
-        
-        
-
-        <div class="form-group col-12 col-md-6 col-xl-4 text-start">
-          <div class="relative">
-            <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
-              <i class="fa-solid fa-user text-muted"></i>
-            </span>
-            <select formControlName="adults"
-              class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
-              <option selected disabled value="">Total No. of Person</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-            </select>
-          </div>
-          <div
-            *ngIf="formControls['adults'].invalid && (formControls['adults'].dirty || formControls['adults'].touched)"
-            class="text-red-500">
-            <div *ngIf="formControls['adults'].errors?.['required']">Total No. of Person is required.</div>
-          </div>
-        </div>
-
-        <div class="form-group col-12 col-md-6 col-xl-4 text-start">
-          <div class="relative">
-            <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
-              <i class="fa-solid fa-child text-muted"></i>
-            </span>
-            <select formControlName="childrens"
-              class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
-              <option selected disabled value="">Total No. of Childrens</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-            </select>
-          </div>
-          <div
-            *ngIf="formControls['childrens'].invalid && (formControls['childrens'].dirty || formControls['childrens'].touched)"
-            class="text-red-500">
-            <div *ngIf="formControls['childrens'].errors?.['required']">Total No. of Childrens is required.</div>
-          </div>
-        </div>
-
-        <div class="col-span-3 flex justify-end">
-          <button type="button" (click)="onReset()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg mr-2">
-            Clear
-          </button>
-          <button type="submit" [disabled]="bookingForm.invalid"
-            class="px-4 py-2 text-black justify-center rounded-md bg-[#EEAC36] text-sm font-semibold leading-6 shadow-sm hover:bg-[#ffc107] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            Save & Proceed
-          </button>
-        </div>
-
-
       </form>
+      
 
 
+
+      <div class="w-full border cursor-pointer header-bg">
+        <div class="flex justify-center items-center space-x-2 py-2">
+          <i class="fa-solid fa-hourglass-end text-[#FFA500]"></i>
+          <p class="font-semibold">
+            Order Summary
+          </p>
+        </div>
+      </div>
+
+      <form [formGroup]="bookingForm" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 bg-white p-4" (ngSubmit)="bookingForm.valid && postBookingData()">
+
+        <div class="form-group col-span-1 md:col-span-1 xl:col-span-1">
+          <label for="check_in" class="block mb-1 text-sm font-medium text-gray-700">Check-in</label>
+          <div class="relative">
+            <input type="date" id="check_in" placeholder="Check-in" formControlName="check_in"
+              class="w-full rounded-lg border px-3 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              min="{{ getCurrentDate() }}" [value]="getCurrentDate()" />
+            <i class="fas fa-calendar-alt absolute top-3 left-3 text-gray-400"></i>
+          </div>
+          <div *ngIf="formControls['check_in'].invalid && (formControls['check_in'].dirty || formControls['check_in'].touched)"
+            class="text-red-500">
+            <div *ngIf="formControls['check_in'].errors?.['required']">Check-in date is required.</div>
+          </div>
+        </div>
+      
+      
+        <div class="form-group col-span-1 md:col-span-1 xl:col-span-1">
+          <label for="check_out" class="block mb-1 text-sm font-medium text-gray-700">Check-out</label>
+          <div class="relative">
+            <input type="date" id="check_out" placeholder="Check-out" formControlName="check_out"
+              class="w-full rounded-lg border px-3 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              min="{{ getCurrentDate() }}" [value]="getCurrentDate()" />
+            <i class="fas fa-calendar-alt absolute top-3 left-3 text-gray-400"></i>
+          </div>
+          <div *ngIf="formControls['check_out'].invalid && (formControls['check_out'].dirty || formControls['check_out'].touched)"
+            class="text-red-500">
+            <div *ngIf="formControls['check_out'].errors?.['required']">Check-out date is required.</div>
+          </div>
+        </div>
+      
+      
+      
+        <div class="form-group col-span-1 md:col-span-1 xl:col-span-1 text-start">
+          <label for="room-category" class="block mb-1 text-sm font-medium text-gray-700">Room Category</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+              <i class="fa-solid fa-bed text-muted"></i>
+            </span>
+            <select id="room-category" formControlName="roomCategory"
+              class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+              <option selected disabled value="">Select Room Category</option>
+              <option *ngFor="let category of roomCategories" [value]="category.room_category_id">
+                {{ category.room_category }} - ${{ category.price }}
+              </option>
+            </select>
+          </div>
+          <div *ngIf="formControls['roomCategory'].invalid && (formControls['roomCategory'].dirty || formControls['roomCategory'].touched)"
+            class="text-red-500">
+            <div *ngIf="formControls['roomCategory'].errors?.['required']">Room Category is required.</div>
+          </div>
+        </div>
+      
+      </form>
+      
       <!-- //FormEnd -->
 
 
@@ -151,3 +186,6 @@
 
   </div>
 </section>
+
+
+

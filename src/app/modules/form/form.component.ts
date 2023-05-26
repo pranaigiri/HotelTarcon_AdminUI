@@ -1,10 +1,16 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CountryISO } from 'ngx-intl-tel-input';
-import { ApiService } from 'src/app/services/api.service';
 
 
 
+  // Email validator using regex pattern
+  export function emailValidator(control: FormControl): { [key: string]: any } | null {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(control.value) ? null : { invalidEmail: true };
+  }
+  
 
 @Component({
   selector: 'app-form',
@@ -12,13 +18,15 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
-
+  showModal = false;
   bookingForm: FormGroup = new FormGroup({});
-  CountryISO = CountryISO;
-  preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.Bhutan, CountryISO.Nepal, CountryISO.Bangladesh];
-
-  isDatePickerOpen: boolean = false;
-  constructor(private formBuilder: FormBuilder) { }
+  roomCategories: any[] = [
+    { room_category_id: 1, room_category: 'Standard Room', price: 100 },
+    { room_category_id: 2, room_category: 'Deluxe Room', price: 150 },
+    { room_category_id: 3, room_category: 'Suite', price: 200 }
+  ];
+  
+  constructor(private formBuilder: FormBuilder,private datePipe: DatePipe) { }
 
   ngOnInit() {
     this.initializeForm();
@@ -28,11 +36,19 @@ export class FormComponent implements OnInit {
     this.bookingForm = this.formBuilder.group({
       guest_name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
       guest_email: ['', [Validators.required, Validators.email]],
-      guest_phone: ['', [Validators.required]],
+      // guest_phone: ['', [Validators.required]],
       adults: ['', [Validators.required]],
       childrens: ['', [Validators.required]],
-      booking_dates: ['', Validators.required]
+      check_out: [this.getCurrentDate(), Validators.required],
+      check_in: [this.getCurrentDate(), Validators.required],
+      roomCategory:['', [Validators.required]],
+
     });
+  }
+
+  getCurrentDate(): string {
+    const today = new Date();
+    return this.datePipe.transform(today, 'yyyy-MM-dd')!;
   }
 
   // Accessing form controls for convenience
@@ -43,8 +59,10 @@ export class FormComponent implements OnInit {
   // Handle form submission
   postBookingData() {
     if (this.bookingForm.valid) {
+      alert("Valid")
       // Form is valid, proceed with saving data
     } else {
+      alert("InValid")
       // Form is invalid, handle errors or display validation messages
     }
   }
@@ -53,25 +71,21 @@ export class FormComponent implements OnInit {
     this.bookingForm.reset({
       guest_name: '',
       guest_email: '',
-      guest_phone: '',
+      // guest_phone: '',
       adults: '',
-      childrens: ''
+      childrens: '',
+      check_out:this.getCurrentDate(),
+      check_in:this.getCurrentDate(),
+      roomCategory:''
     });
   }
 
+  
+  closeModal() {
+    this.showModal = false;
+  }
 
-  //For Calender
-  toggleDatePicker(): void {
-    this.isDatePickerOpen = !this.isDatePickerOpen;
-  }
-  
-  onDatePickerOpen(): void {
-    this.isDatePickerOpen = true;
-  }
-  
-  onDatePickerClose(): void {
-    this.isDatePickerOpen = false;
-  }
+
 
 
 }
