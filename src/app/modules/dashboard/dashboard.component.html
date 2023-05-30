@@ -99,15 +99,15 @@
               </td>
               <!-- BOOKING DATE -->
               <td class="px-6 py-4 border-b dark:border-gray-700">
-                {{booking.booking.booking_from | date:'yyyy-MM-dd'}}
+                {{booking.booking.booking_date | date:'yyyy-MM-dd'}}
               </td>
               <!-- CHECK-IN -->
               <td class="px-6 py-4 border-b dark:border-gray-700">
-                {{booking.booking.booking_till | date:'yyyy-MM-dd'}}
+                {{booking.booking.booking_from | date:'yyyy-MM-dd'}}
               </td>
               <!-- CHECK-OUT -->
               <td class="px-6 py-4 border-b dark:border-gray-700">
-                {{booking.payment.payment_status}}
+                {{booking.booking.booking_till | date:'yyyy-MM-dd'}}
               </td>
               <!-- BOOKING MODE -->
               <td class="px-6 py-4 border-b dark:border-gray-700">
@@ -118,7 +118,7 @@
                 {{booking.guests.guest_total}}
               </td>
               <td class="px-6 py-4 text-center border-b dark:border-gray-700">
-                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Details</a>
               </td>
             </tr>
           </ng-container>

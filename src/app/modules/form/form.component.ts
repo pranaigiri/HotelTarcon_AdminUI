@@ -15,9 +15,10 @@ export class FormComponent implements OnInit {
   showModal = false;
   bookingForm: FormGroup = new FormGroup({});
   roomCategories: any[] = [
-    { room_category_id: 1, room_category: 'Standard Room', price: 100 },
-    { room_category_id: 2, room_category: 'Deluxe Room', price: 150 },
-    { room_category_id: 3, room_category: 'Suite', price: 200 }
+    { room_category_id: 1, room_category_name: 'Standard Room', room_category_price: 0 },
+    { room_category_id: 2, room_category_name: 'Deluxe Room', room_category_price: 0 },
+    { room_category_id: 4, room_category_name: 'Hill View Room', room_category_price: 0 },
+    { room_category_id: 3, room_category_name: 'Suite', room_category_price: 0 }
   ];
   submitted = false;
   showErrorAlert = false;
@@ -27,6 +28,7 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
     this.initializeForm();
+    this.GetAllRoomCategories();
   }
 
   initializeForm() {
@@ -36,6 +38,8 @@ export class FormComponent implements OnInit {
       guest_email: ['', [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]],
       guest_phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       adults: ['', [Validators.required]],
+      idproof: ['', [Validators.required]],
+      idproofvalue: [{ value: '', disabled: true }, [Validators.required, Validators.pattern('')]],
       childrens: ['', [Validators.required]],
       guest_address: ['', [Validators.required]],
       check_out: [this.getCurrentDate(), Validators.required],
@@ -95,10 +99,15 @@ export class FormComponent implements OnInit {
         guest_phone: this.bookingForm.value.guest_phone,
         guest_address: this.bookingForm.value.guest_address,
         guest_email: this.bookingForm.value.guest_email,
-        guest_total: this.bookingForm.value.adults+this.bookingForm.value.childrens,
+        guest_total: Number(this.bookingForm.value.adults)+Number(this.bookingForm.value.childrens),
         adults: this.bookingForm.value.adults,
         childrens: this.bookingForm.value.childrens
       };
+
+      // alert(this.bookingForm.value.check_in);
+      let noofdays = this.CalculateNoOfDays()
+
+
       this.apiService.postData("Booking/OfflineBooking",postObj).subscribe((res:any)=>{
         console.log("Response Success !");
         this.isFormSubmittedSuccessfully=true;
@@ -121,6 +130,8 @@ export class FormComponent implements OnInit {
       guest_email: '',
       guest_phone: '',
       adults: '',
+      idproof: '',
+      idproofvalue: '',
       childrens: '',
       check_out:this.getCurrentDate(),
       check_in:this.getCurrentDate(),
@@ -129,6 +140,8 @@ export class FormComponent implements OnInit {
     });
     this.submitted = false;
     this.showErrorAlert = false;
+    this.isFormSubmittedSuccessfully=false;
+    this.setValidationPattern();
   }
 
   
@@ -136,7 +149,62 @@ export class FormComponent implements OnInit {
     this.showModal = false;
   }
 
+  GetAllRoomCategories(){
+    this.apiService.getData("Common/GetAllRoomCategories").subscribe((res:any)=>{
+      console.log("Response Success GetAllRoomCategories!");
+      this.roomCategories = res.result;
+  })};
+
+
+  CalculateNoOfDays():Number{
+    const date1 = new Date(this.bookingForm.value.check_out);
+    const date2 = new Date(this.bookingForm.value.check_in);
+
+    // Calculate the time difference in milliseconds
+    const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+
+    // Convert milliseconds to days
+    const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+    console.log(daysDiff); 
+
+    return daysDiff;
+  }
+
+
+  //TODO
+  // GSTCalculation(room_category_id: number, noofdays: number) {
+  //   let room_price = Number(this.roomCategories.find(x => x.room_category_id === room_category_id)?.room_category_price);
+  //   let total_room_price = room_price * Number(noofdays);
+  //   let gst = total_room_price * 0.18;
+  // }
 
 
 
+
+
+  setValidationPattern() {
+    const idProofControl = this.bookingForm.get('idproof')!;
+    const idNumberControl = this.bookingForm.get('idproofvalue')!;
+
+    idNumberControl.enable();
+
+
+    if (idProofControl.value === 'Aadhar') {
+      idNumberControl.setValidators([Validators.required, Validators.pattern('^[0-9]{12}$')]);
+    } else if (idProofControl.value === 'VoterCard') {
+      idNumberControl.setValidators([Validators.required, Validators.pattern('^[A-Z]{3}[0-9]{7}$')]);
+    } else if (idProofControl.value === 'PanCard') {
+      idNumberControl.setValidators([Validators.required, Validators.pattern('^[A-Z]{5}[0-9]{4}[A-Z]{1}$')]);
+    } else {
+      idNumberControl.disable();
+      idNumberControl.clearValidators();
+    }
+  
+    idNumberControl.updateValueAndValidity();
+  }
+  
+  
+  
+  
 }

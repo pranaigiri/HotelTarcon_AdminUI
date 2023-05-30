@@ -9,6 +9,10 @@
         <span class="font-bold"><i class="fa fa-info-circle text-blue-700 pr-1"></i>Note:</span> Streamline bookings,
         manage availability and store guest details for seamless ofline reservations.
       </p>
+      <p class="text-sm text-gray-700">
+        <span class="font-bold"><i class="fa fa-info-circle text-blue-700 pr-1"></i>Note:</span> A hard copy of any
+        identification proof is mandatory and must be physically collected.
+      </p>
     </div>
 
     <!-- <div class="alert alert-danger w-full text-white text-center bg-red-500 p-2"  *ngIf="showErrorAlert && (submitted || bookingForm.invalid)" >
@@ -16,7 +20,8 @@
     </div> -->
 
     <!-- <section class="col-span-1 md:col-span-2 p-4" *ngIf="bookingForm.valid && submitted && isFormSubmittedSuccessfully"> -->
-    <section class="col-span-1 md:col-span-2 p-4 lg:w-1/2 mx-auto md:w-full sm:w-full"  *ngIf="bookingForm.valid && submitted && isFormSubmittedSuccessfully">
+    <section class="col-span-1 md:col-span-2 p-4 lg:w-1/2 mx-auto md:w-full sm:w-full"
+      *ngIf="bookingForm.valid && submitted && isFormSubmittedSuccessfully">
       <div class="w-full border cursor-pointer header-bg">
         <div class="flex justify-center items-center space-x-2 py-2">
           <i class="fa-solid fa-hourglass-end text-[#FFA500]"></i>
@@ -64,11 +69,11 @@
         </div>
       </div>
     </section>
-    
-    
-    
-    
-    
+
+
+
+
+
 
 
     <section *ngIf="!bookingForm.valid || !submitted || !isFormSubmittedSuccessfully">
@@ -192,21 +197,75 @@
               <div *ngIf="formControls['guest_phone'].errors?.['pattern']">Invalid phone format.</div>
             </div>
           </div>
-          
 
 
-          <div class="col-span-1 md:col-span-2 lg:col-span-3 flex justify-end">
-            <button type="button" (click)="onReset()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg mr-2">
-              Clear
-            </button>
-            <button type="submit"
-              class="px-4 py-2 text-black justify-center rounded-md bg-[#EEAC36] text-sm font-semibold leading-6 shadow-sm hover:bg-[#ffc107] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-              Save & Proceed
-            </button>
+
+
+        </div>
+      </form>
+
+      <div class="w-full border cursor-pointer header-bg">
+        <div class="flex justify-center items-center space-x-2 py-2">
+          <i class="fa-solid fa-hourglass-end text-[#FFA500]"></i>
+          <p class="font-semibold">
+            Documentation
+          </p>
+        </div>
+      </div>
+
+
+      <form [formGroup]="bookingForm" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 bg-white p-4"
+        (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+          <label for="idproof" class="block mb-1 text-sm font-medium text-gray-700">ID Proof Type</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+              <i class="fa-solid fa-file-lines text-muted"></i>
+            </span>
+            <select id="idproof" formControlName="idproof"
+              class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+              (change)="setValidationPattern()">
+              <option selected disabled value="">ID Proof Type</option>
+              <option value="VoterCard">Voter Card</option>
+              <option value="PanCard">Pan Card</option>
+              <option value="Aadhar">Aadhar Number</option>
+            </select>
+          </div>
+          <div
+            *ngIf="bookingForm.controls['idproof'].invalid && (bookingForm.controls['idproof'].dirty || bookingForm.controls['idproof'].touched)"
+            class="text-red-500">
+            <div *ngIf="bookingForm.controls['idproof'].errors?.['required']">ID Proof Type is required.</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="idproofvalue" class="block mb-1 text-sm font-medium text-gray-700">ID Proof Unique Key</label>
+          <div class="relative">
+            <input type="text" id="idproofvalue" placeholder="Enter ID Proof Unique Key" formControlName="idproofvalue"
+              class="w-full rounded-lg border px-3 py-2 pl-10" />
+            <i class="fas fa-key absolute top-3 left-3 text-gray-400"></i>
+          </div>
+
+          <div
+            *ngIf="bookingForm.controls['idproofvalue'].invalid && (bookingForm.controls['idproofvalue'].dirty || bookingForm.controls['idproofvalue'].touched)"
+            class="text-red-500">
+            <div *ngIf="bookingForm.controls['idproofvalue'].errors?.['required']">ID Proof Unique Key is required.
+            </div>
+            <div *ngIf="bookingForm.controls['idproofvalue'].errors?.['pattern']">
+              <ng-container [ngSwitch]="bookingForm.controls['idproof'].value">
+                <div *ngSwitchCase="'Aadhar'">Aadhar number is invalid.</div>
+                <div *ngSwitchCase="'VoterCard'">Voter Card number is invalid.</div>
+                <div *ngSwitchCase="'PanCard'">Pan Card number is invalid.</div>
+                <div *ngSwitchDefault>Invalid ID Proof Unique Key.</div>
+              </ng-container>
+            </div>
           </div>
 
 
         </div>
+
+
       </form>
 
 
@@ -267,7 +326,8 @@
               class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
               <option selected disabled value="">Select Room Category</option>
               <option *ngFor="let category of roomCategories" [value]="category.room_category_id">
-                {{ category.room_category }} - ${{ category.price }}
+                {{ category.room_category_name }} - <span>&#8377;</span>
+                {{ category.room_category_price }}
               </option>
             </select>
           </div>
@@ -277,6 +337,28 @@
             <div *ngIf="formControls['roomCategory'].errors?.['required']">Room Category is required.</div>
           </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+        <div class="col-span-1 md:col-span-2 lg:col-span-3 flex justify-end">
+          <button type="button" (click)="onReset()" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg mr-2">
+            Clear
+          </button>
+          <button type="submit"
+            class="px-4 py-2 text-black justify-center rounded-md bg-[#EEAC36] text-sm font-semibold leading-6 shadow-sm hover:bg-[#ffc107] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            Save & Proceed
+          </button>
+        </div>
+
+
+
 
       </form>
 
