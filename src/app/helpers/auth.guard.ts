@@ -10,6 +10,7 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router, private auth: AuthService,) {
   }
   canActivate(next: ActivatedRouteSnapshot): boolean {
+    console.clear();
     var handler = new JwtHelperService();
     var token = this.auth.getAuthenticationToken();
     if (token != null) {

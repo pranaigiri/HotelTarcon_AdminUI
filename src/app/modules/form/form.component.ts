@@ -1,6 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { error } from 'console';
 import { ApiService } from 'src/app/services/api.service';
 
 
@@ -24,27 +26,40 @@ export class FormComponent implements OnInit {
   showErrorAlert = false;
   errorMsg:string="Error: Please fill in all the required fields correctly.";
   isFormSubmittedSuccessfully:boolean=false;
-  constructor(private formBuilder: FormBuilder,private datePipe: DatePipe,private apiService: ApiService) { }
+  IsEditRequestedID:string="0";
+  EditFromData:any={};
+  constructor(private formBuilder: FormBuilder,private datePipe: DatePipe,private apiService: ApiService,private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.initializeForm();
+
+    this.route.params.subscribe(params => {
+      this.IsEditRequestedID = params['id'];
+      console.log("Fetch Booking")
+      if(this.IsEditRequestedID !="0"){
+        //IF Edit Requested
+        this.GetBookingByBookingId();
+      }
+    });
+
     this.GetAllRoomCategories();
   }
 
   initializeForm() {
+    console.log("Form Initialization",this.getCurrentDate());
+
     this.bookingForm = this.formBuilder.group({
-      guest_name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
-      // guest_email: ['', [Validators.required, Validators.email]],
-      guest_email: ['', [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]],
-      guest_phone: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
-      adults: ['', [Validators.required]],
+      guest_name: [this.IsEditRequestedID =="0"?'':this.EditFromData.data.guests.guest_name, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
+      guest_email: [this.IsEditRequestedID =="0"?'':this.EditFromData.data.guests.guest_email, [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]],
+      guest_phone: [this.IsEditRequestedID =="0"?'':this.EditFromData.data.guests.guest_phone, [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      adults: [this.IsEditRequestedID =="0"?'':this.EditFromData.data.guests.adults, [Validators.required]],
       idproof: ['', [Validators.required]],
       idproofvalue: [{ value: '', disabled: true }, [Validators.required, Validators.pattern('')]],
-      childrens: ['', [Validators.required]],
-      guest_address: ['', [Validators.required]],
-      check_out: [this.getCurrentDate(), Validators.required],
-      check_in: [this.getCurrentDate(), Validators.required],
-      roomCategory:['', [Validators.required]],
+      childrens: [this.IsEditRequestedID =="0"?'':this.EditFromData.data.guests.childrens, [Validators.required]],
+      guest_address: [this.IsEditRequestedID =="0"?'':this.EditFromData.data.guests.guest_address, [Validators.required]],
+      check_out: [this.IsEditRequestedID =="0"?this.getCurrentDate():this.datePipe.transform(this.EditFromData.data.booking.booking_till,"yyyy-MM-dd"), Validators.required],
+      check_in: [this.IsEditRequestedID =="0"?this.getCurrentDate():this.datePipe.transform(this.EditFromData.data.booking.booking_from,"yyyy-MM-dd"), Validators.required],
+      roomCategory:[this.IsEditRequestedID =="0"?'':this.EditFromData.data.booking.room_category_id, [Validators.required]],
 
     });
   }
@@ -84,8 +99,8 @@ export class FormComponent implements OnInit {
         booking_id: 'asdasd',
         booking_date: new Date(),
         // booking_from: this.bookingForm.value.check_in,
-        booking_from: new Date(),
-        booking_till: new Date(),
+        booking_from: new Date(this.bookingForm.value.check_in),
+        booking_till: new Date(this.bookingForm.value.check_out),
         // booking_till: this.bookingForm.value.check_out,
         room_category_id: this.bookingForm.value.room_category_id,
         booking_mode: 'offline',
@@ -104,7 +119,6 @@ export class FormComponent implements OnInit {
         childrens: this.bookingForm.value.childrens
       };
 
-      // alert(this.bookingForm.value.check_in);
       let noofdays = this.CalculateNoOfDays()
 
 
@@ -172,7 +186,7 @@ export class FormComponent implements OnInit {
   }
 
 
-  //TODO
+  //TODO // Here You have to work
   // GSTCalculation(room_category_id: number, noofdays: number) {
   //   let room_price = Number(this.roomCategories.find(x => x.room_category_id === room_category_id)?.room_category_price);
   //   let total_room_price = room_price * Number(noofdays);
@@ -202,6 +216,18 @@ export class FormComponent implements OnInit {
     }
   
     idNumberControl.updateValueAndValidity();
+  }
+
+
+  async GetBookingByBookingId(){
+    this.EditFromData={};
+    await this.apiService.getDataById("Booking/GetBookingBySearchParam",this.IsEditRequestedID).subscribe((res:any)=>{
+      console.log("Edit : From Fetched Sucessfully !");
+      this.EditFromData = res.result;
+      this.initializeForm();
+    },(error:any)=>{
+      this.initializeForm();
+    })
   }
   
   

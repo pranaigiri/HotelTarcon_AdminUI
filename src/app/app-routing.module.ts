@@ -21,7 +21,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'dashboard', component: DashboardComponent,canActivateChild: [AuthGuard] },
-      { path: 'form', component: FormComponent ,canActivateChild: [AuthGuard] },
+      { path: 'form/:id', component: FormComponent ,canActivateChild: [AuthGuard] },
       // Add more routes as needed
     ]
   },
