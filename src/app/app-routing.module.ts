@@ -6,6 +6,7 @@ import { AuthGuard } from './helpers/auth.guard';
 import { FormComponent } from './modules/form/form.component';
 import { SidebarComponent } from './modules/sidebar/sidebar.component';
 import { LayoutComponent } from './modules/layout/layout.component';
+import { DetailsViewComponent } from './modules/details-view/details-view.component';
 
 const routes: Routes = [
   // { path: "", component: LoginComponent, pathMatch: "full" },
@@ -22,6 +23,7 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent,canActivateChild: [AuthGuard] },
       { path: 'form/:id', component: FormComponent ,canActivateChild: [AuthGuard] },
+      { path: 'details-view/:id', component: DetailsViewComponent, canActivateChild: [AuthGuard] }
       // Add more routes as needed
     ]
   },

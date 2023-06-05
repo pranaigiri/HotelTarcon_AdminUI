@@ -16,24 +16,19 @@ import { ApiService } from 'src/app/services/api.service';
 export class FormComponent implements OnInit {
   showModal = false;
   bookingForm: FormGroup = new FormGroup({});
-  roomCategories: any[] = [
-    { room_category_id: 1, room_category_name: 'Standard Room', room_category_price: 0 },
-    { room_category_id: 2, room_category_name: 'Deluxe Room', room_category_price: 0 },
-    { room_category_id: 4, room_category_name: 'Hill View Room', room_category_price: 0 },
-    { room_category_id: 3, room_category_name: 'Suite', room_category_price: 0 }
-  ];
+  roomCategories: any[] = [];
   submitted = false;
   showErrorAlert = false;
   errorMsg: string = "Error: Please fill in all the required fields correctly.";
   isFormSubmittedSuccessfully: boolean = false;
   IsEditRequestedID: string = "0";
   EditFromData: any = {};
-  ViewData:any={
-    daysdiff:0,
-    overallprice:0,
-    gst_percentile:0,
-    total_room_price:0,
-    room_price:0
+  ViewData: any = {
+    daysdiff: 0,
+    overallprice: 0,
+    gst_percentile: 0,
+    total_room_price: 0,
+    room_price: 0
   }
   constructor(private formBuilder: FormBuilder, private datePipe: DatePipe, private apiService: ApiService, private route: ActivatedRoute) { }
 
@@ -51,6 +46,30 @@ export class FormComponent implements OnInit {
 
     this.GetAllRoomCategories();
   }
+  roomCategoryName: string = '';
+
+  GetAllRoomCategories() {
+    this.apiService.getData("Common/GetAllRoomCategories").subscribe((res: any) => {
+      console.log("Response Success GetAllRoomCategories!");
+      this.roomCategories = res.result;
+
+      // Populate room_category_name based on room_category_id
+      this.roomCategories.forEach((category: any) => {
+        const selectedCategory = this.roomCategories.find((c: any) => c.room_category_id === category.room_category_id);
+        category.room_category_name = selectedCategory ? selectedCategory.room_category_name : '';
+      });
+
+      console.log(this.roomCategories);
+
+      // Assign the selected room category name to the form control value
+      const roomCategoryId = this.bookingForm.controls['roomCategory'].value;
+      const selectedCategory = this.roomCategories.find(category => category.room_category_id === roomCategoryId);
+      const roomCategoryName = selectedCategory ? selectedCategory.room_category_name : '';
+      this.bookingForm.controls['roomCategory'].setValue(roomCategoryName);
+    });
+  }
+
+
 
   initializeForm() {
     console.log("Form Initialization", this.getCurrentDate());
@@ -66,7 +85,12 @@ export class FormComponent implements OnInit {
       guest_address: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.data.guests.guest_address, [Validators.required]],
       check_out: [this.IsEditRequestedID == "0" ? this.getCurrentDate() : this.datePipe.transform(this.EditFromData.data.booking.booking_till, "yyyy-MM-dd"), Validators.required],
       check_in: [this.IsEditRequestedID == "0" ? this.getCurrentDate() : this.datePipe.transform(this.EditFromData.data.booking.booking_from, "yyyy-MM-dd"), Validators.required],
-      roomCategory: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.data.booking.room_category_id, [Validators.required]],
+      roomCategory: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.data.booking.room_category_name, this.IsEditRequestedID === "0" ? [] : [Validators.required]],
+      roomPrice: [this.IsEditRequestedID === "0" ? '' : parseFloat(this.EditFromData.data.booking.room_category_price) || 0],
+
+
+
+
 
     });
   }
@@ -94,6 +118,10 @@ export class FormComponent implements OnInit {
       this.postBookingData();
     }
   }
+  totalPrice: number = 0;
+
+
+
 
   // Handle form submission
   postBookingData() {
@@ -101,9 +129,14 @@ export class FormComponent implements OnInit {
 
       console.log("Form Valid !");
 
+
       this.ViewData.daysdiff = this.CalculateNoOfDays();
       this.ViewData.overallprice = this.OverAllPriceCalculation(Number(this.bookingForm.value.roomCategory), this.ViewData.daysdiff);
-
+      // Calculate the overall price and total room price
+      let calculationResult = this.OverAllPriceCalculation(Number(this.bookingForm.value.roomCategory), this.ViewData.daysdiff);
+      let total_room_price = calculationResult.total_room_price;
+      // Assign the total room price to the 'totalPrice' property
+      this.totalPrice = total_room_price;
       //Initialising Data
       let postObj: any = {
         booking_id: 'asdasd',
@@ -114,7 +147,7 @@ export class FormComponent implements OnInit {
         // booking_till: this.bookingForm.value.check_out,
         room_category_id: this.bookingForm.value.room_category_id,
         booking_mode: 'offline',
-        total_amount: 20,
+        total_amount: total_room_price,
         paid_amount: 0,
         due_amount: 0,
         payment_status: 'Paid',
@@ -170,12 +203,18 @@ export class FormComponent implements OnInit {
     this.showModal = false;
   }
 
-  GetAllRoomCategories() {
-    this.apiService.getData("Common/GetAllRoomCategories").subscribe((res: any) => {
-      console.log("Response Success GetAllRoomCategories!");
-      this.roomCategories = res.result;
-    })
-  };
+
+  // {
+  //   "room_category_id": 1,
+  //   "room_category_name": "Standard",
+  //   "room_category_description": "asd",
+  //   "room_category_price": 3000,
+  //   "room_category_roomcount": 2
+  // }
+
+
+
+
 
 
   CalculateNoOfDays(): number {
@@ -192,25 +231,43 @@ export class FormComponent implements OnInit {
 
     return daysDiff == 0 ? 1 : daysDiff;
   }
+  // Calculate the overall price and total room price
+
+
 
 
   //TODO 
   OverAllPriceCalculation(room_category_id: number, noofdays: number): any {
+
+    // Rest of your code
     //Room Price
-    let room_price = Number(this.roomCategories.find(x => x.room_category_id === room_category_id)?.room_category_price);
-    this.ViewData.room_price=room_price;
+    // let room_price = Number(this.roomCategories.find(x => x.room_category_id === room_category_id)?.room_category_price);
+    // // this.selectedRoomCategoryPrice = room_price;
+    let room_price = this.roomCategories.find(x => x.room_category_id === room_category_id)?.room_category_price;
+    console.log("Room Price:", room_price);
+    this.ViewData.room_price = room_price;
+    console.log(this.ViewData.room_price);
 
     //Total Price
     let total_room_price = room_price * Number(noofdays);
-    this.ViewData.total_price=total_room_price;
+    this.ViewData.total_price = total_room_price;
 
     //Gst Percentile
     let gst = this.getGSTPercentage(total_room_price);
-    this.ViewData.gst_percentile=gst;
+    this.ViewData.gst_percentile = gst;
 
     let overallprice = total_room_price * gst;
-    return overallprice;
+    console.log(overallprice);
+    return {
+      overallprice: overallprice,
+      total_room_price: total_room_price
+    };
   }
+
+
+
+
+
 
 
 
@@ -249,9 +306,9 @@ export class FormComponent implements OnInit {
     })
   }
 
-  getGSTPercentage(price:number) {
+  getGSTPercentage(price: number) {
     let gstPercentage;
-  
+
     if (price <= 5000) {
       gstPercentage = 5;
     } else if (price <= 10000) {
@@ -259,7 +316,7 @@ export class FormComponent implements OnInit {
     } else {
       gstPercentage = 18;
     }
-  
+
     return gstPercentage;
   }
 

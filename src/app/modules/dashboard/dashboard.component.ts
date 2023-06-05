@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
   GetAllBookings(){
     this.apiService.getData("Booking/GetAllBookings").subscribe((res:any)=>{
       this.bookingsData = res.result.data
-      console.log(this.bookingsData)
+      console.log(this.bookingsData, "All the data")
     })
   }
 

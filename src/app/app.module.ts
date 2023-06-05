@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
+import { DetailsViewComponent } from './modules/details-view/details-view.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +28,8 @@ import { MatIconModule } from '@angular/material/icon';
     DashboardComponent,
     FormComponent,
     SidebarComponent,
-    LayoutComponent
+    LayoutComponent,
+    DetailsViewComponent
   ],
   
   imports: [

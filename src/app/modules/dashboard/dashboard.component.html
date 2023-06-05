@@ -118,8 +118,11 @@
                 {{booking.guests.guest_total}}
               </td>
               <td class="px-6 py-4 text-center border-b dark:border-gray-700">
-                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" [routerLink]="['/admin/form', booking.booking.booking_id]" >Edit</a>
+                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" [routerLink]="['/admin/form', booking.booking.booking_id]">Edit</a>
+                <span> / </span>
+                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" [routerLink]="['/admin/details-view', booking.booking.booking_id]">Details</a>
               </td>
+              
             </tr>
           </ng-container>
         </tbody>
