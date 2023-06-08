@@ -1,4 +1,4 @@
-<section class="col-span-1 md:col-span-2 p-4 lg:w-1/2 mx-auto md:w-full sm:w-full">
+<section class="col-span-1 md:col-span-2 p-4 lg:w-1/1 mx-auto md:w-full sm:w-full"  *ngIf="bookingData">
     <div class="w-full border cursor-pointer header-bg">
         <div class="flex justify-center items-center space-x-2 py-2">
             <i class="fa-solid fa-hourglass-end text-[#FFA500]"></i>
@@ -6,53 +6,104 @@
         </div>
     </div>
     <div class="bg-white p-4">
-        <div *ngIf="bookingData">
-            <div class="grid grid-cols-2 gap-4">
+        <div>
+            <div class="grid xl:grid-cols-3 md:grid-cols-3 gap-4 sm:grid-cols-2 xs:grid-cols-1">
                 <div>
-                    <label for="guest_name" class="block mb-1 text-sm font-medium text-blue-700">Full Name:</label>
-                    <span class="text-gray-900">{{ bookingData.guests?.guest_name }}</span>
-                </div>
-                <div>
-                    <label for="guest_email" class="block mb-1 text-sm font-medium text-blue-700">Guest Email:</label>
-                    <span class="text-gray-900">{{ bookingData.guests?.guest_email }}</span>
-                </div>
-                <div>
+                    <label for="booking_id" class="block mb-1 text-sm font-medium text-blue-700">Booking ID:</label>
+                    <span class="text-gray-900">{{ bookingData.booking.booking_id }}</span>
+                  </div>
+                  <div>
+                    <label for="booking_date" class="block mb-1 text-sm font-medium text-blue-700">Booking Date:</label>
+                    <span class="text-gray-900">{{ bookingData.booking.booking_date | date :"dd-MMM-yyyy" }}</span>
+                  </div>
+                  <div>
+                    <label for="booking_from" class="block mb-1 text-sm font-medium text-blue-700">Booking From:</label>
+                    <span class="text-gray-900">{{ bookingData.booking.booking_from | date :"dd-MMM-yyyy"  }}</span>
+                  </div>
+                  <div>
+                    <label for="booking_till" class="block mb-1 text-sm font-medium text-blue-700">Booking Till:</label>
+                    <span class="text-gray-900">{{ bookingData.booking.booking_till | date :"dd-MMM-yyyy"  }}</span>
+                  </div>
+                  <div>
+                    <label for="room_category_id" class="block mb-1 text-sm font-medium text-blue-700">Room Category:</label>
+                    <span class="text-gray-900">{{ roomDetails.room_category_name }}</span>
+                  </div>
+                  <div>
+                    <label for="room_category_id" class="block mb-1 text-sm font-medium text-blue-700">Room Category Price:</label>
+                    <span class="text-gray-900">{{ roomDetails.room_category_price }} <span class="text-red-600 d-block"><i class="fa fa-question-circle ms-4 me-2"></i>GST Applicable :{{roomDetails.room_category_price}}</span></span>
+                  </div>
+                  <div>
+                    <label for="booking_mode" class="block mb-1 text-sm font-medium text-blue-700">Booking Mode:</label>
+                    <span class="text-gray-900">{{ bookingData.booking.booking_mode }}</span>
+                  </div>
+                  <div>
+                    <label for="booking_status" class="block mb-1 text-sm font-medium text-blue-700">Booking Status:</label>
+                    <span class="text-gray-900">{{ bookingData.booking.booking_status }}</span>
+                  </div>
+                  <div>
+                    <label for="payment_id" class="block mb-1 text-sm font-medium text-blue-700">Payment ID:</label>
+                    <span class="text-gray-900">{{ bookingData.payment.payment_id }}</span>
+                  </div>
+                  <div>
+                    <label for="invoice_no" class="block mb-1 text-sm font-medium text-blue-700">Invoice No:</label>
+                    <span class="text-gray-900">{{ bookingData.payment.invoice_no }}</span>
+                  </div>
+                  <div>
+                    <label for="reference_no" class="block mb-1 text-sm font-medium text-blue-700">Reference No:</label>
+                    <span class="text-gray-900">{{ bookingData.payment.reference_no }}</span>
+                  </div>
+                  <div>
+                    <label for="transaction_id" class="block mb-1 text-sm font-medium text-blue-700">Transaction ID:</label>
+                    <span class="text-gray-900">{{ bookingData.payment.transaction_id }}</span>
+                  </div>
+                  <div>
+                    <label for="total_amount" class="block mb-1 text-sm font-medium text-blue-700">Total Amount:</label>
+                    <span class="text-gray-900">{{ bookingData.payment.total_amount }}</span>
+                  </div>
+                  <div>
+                    <label for="paid_amount" class="block mb-1 text-sm font-medium text-blue-700">Paid Amount:</label>
+                    <span class="text-gray-900">{{ bookingData.payment.paid_amount }}</span>
+                  </div>
+                  <div>
+                    <label for="due_amount" class="block mb-1 text-sm font-medium text-blue-700">Due Amount:</label>
+                    <span class="text-gray-900">{{ bookingData.payment.due_amount }}</span>
+                  </div>
+                  <div>
+                    <label for="payment_status" class="block mb-1 text-sm font-medium text-blue-700">Payment Status:</label>
+                    <span class="text-gray-900">{{ bookingData.payment.payment_status }}</span>
+                  </div>
+                  <div>
+                    <label for="upi_id" class="block mb-1 text-sm font-medium text-blue-700">UPI ID:</label>
+                    <span class="text-gray-900">{{ bookingData.payment.upi_id }}</span>
+                  </div>
+                  <div>
+                    <label for="guest_name" class="block mb-1 text-sm font-medium text-blue-700">Guest Name:</label>
+                    <span class="text-gray-900">{{ bookingData.guests.guest_name }}</span>
+                  </div>
+                  <div>
                     <label for="guest_phone" class="block mb-1 text-sm font-medium text-blue-700">Guest Phone:</label>
-                    <span class="text-gray-900">{{ bookingData.guests?.guest_phone }}</span>
-                </div>
-                <div>
+                    <span class="text-gray-900">{{ bookingData.guests.guest_phone }}</span>
+                  </div>
+                  <div>
+                    <label for="guest_address" class="block mb-1 text-sm font-medium text-blue-700">Guest Address:</label>
+                    <span class="text-gray-900">{{ bookingData.guests.guest_address }}</span>
+                  </div>
+                  <div>
+                    <label for="guest_email" class="block mb-1 text-sm font-medium text-blue-700">Guest Email:</label>
+                    <span class="text-gray-900">{{ bookingData.guests.guest_email }}</span>
+                  </div>
+                  <div>
+                    <label for="guest_total" class="block mb-1 text-sm font-medium text-blue-700">Guest Total:</label>
+                    <span class="text-gray-900">{{ bookingData.guests.guest_total }}</span>
+                  </div>
+                  <div>
                     <label for="adults" class="block mb-1 text-sm font-medium text-blue-700">Adults:</label>
-                    <span class="text-gray-900">{{ bookingData.guests?.adults }}</span>
-                </div>
-                <div>
-                    <label for="adults" class="block mb-1 text-sm font-medium text-blue-700">Children:</label>
-                    <span class="text-gray-900">{{ bookingData.guests?.childrens }}</span>
-                </div>
-                <div>
-                    <label for="check_in" class="block mb-1 text-sm font-medium text-blue-700">Check-in Date:</label>
-                    <span class="text-gray-900">{{ bookingData.booking?.booking_from | date:'yyyy-MM-dd' }}</span>
-                </div>
-                <div>
-                    <label for="check_in" class="block mb-1 text-sm font-medium text-blue-700">Check-out Date:</label>
-                    <span class="text-gray-900">{{ bookingData.booking?.booking_till | date:'yyyy-MM-dd' }}</span>
-                </div>
-                <div>
-                    <label for="roomCategory" class="block mb-1 text-sm font-medium text-blue-700">Room
-                        Category:</label>
-                    <span class="text-gray-900">{{ bookingData.booking?.room_category_id }}</span>
-
-                </div>
-                <div>
-                    <label for="roomCategory" class="block mb-1 text-sm font-medium text-blue-700">Total Room Price
-                        :</label>
-                    <span class="text-gray-900">{{ bookingData.payment?.total_amount }}</span>
-
-                </div>
-                <div class="col-span-2">
-                    <label for="guest_address" class="block mb-1 text-sm font-medium text-blue-700">Guest
-                        Address:</label>
-                    <span class="text-gray-900">{{ bookingData.guests?.guest_address }}</span>
-                </div>
+                    <span class="text-gray-900">{{ bookingData.guests.adults }}</span>
+                  </div>
+                  <div>
+                    <label for="childrens" class="block mb-1 text-sm font-medium text-blue-700">Childrens:</label>
+                    <span class="text-gray-900">{{ bookingData.guests.childrens }}</span>
+                  </div>
             </div>
         </div>
     </div>
