@@ -62,17 +62,15 @@
             <label for="roomCategory" class="block mb-1 text-sm font-medium text-blue-700">Room Category:</label>
             <span class="text-gray-900">{{ bookingForm.controls['roomCategory'].value }}</span>
           </div>
-          
+
           <div>
             <label for="roomPrice" class="block mb-1 text-sm font-medium text-blue-700">Total Room Price :</label>
             <span class="text-gray-900"> <span>&#8377;</span> {{ totalPrice }}</span> <!-- Add this line -->
           </div>
-          
-
-          
-
-
-
+          <div>
+            <label for="bookingMode" class="block mb-1 text-sm font-medium text-blue-700">Booking Mode:</label>
+            <span class="text-gray-900">{{ bookingForm.value.bookingMode }}</span>
+          </div>
 
 
           <div class="col-span-2">
@@ -325,7 +323,7 @@
             <select id="room-category" formControlName="roomCategory"
               class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
               <option selected disabled value="">Select Room Category</option>
-              <option *ngFor="let category of roomCategories" [value]="category.room_category_id"   >
+              <option *ngFor="let category of roomCategories" [value]="category.room_category_id">
                 {{ category.room_category_name }} - <span>&#8377;</span>
                 {{ category.room_category_price }}
               </option>
@@ -339,7 +337,23 @@
           </div>
         </div>
 
-
+        <div class="form-group col-span-1 md:col-span-1 xl:col-span-1 text-start">
+          <label for="booking-mode" class="block mb-1 text-sm font-medium text-gray-700">Booking Mode</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+              <i class="fa-solid fa-calendar-alt text-muted"></i>
+            </span>
+            <select id="booking-mode" formControlName="bookingMode" class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+              <option value="" selected disabled>Select Booking Mode</option>
+              <option value="offline">Offline</option>
+              <option value="online">Online</option>
+            </select>
+          </div>
+          <div *ngIf="formControls['bookingMode'].invalid && (formControls['bookingMode'].dirty || formControls['bookingMode'].touched)" class="text-red-500">
+            <div *ngIf="formControls['bookingMode'].errors?.['required']">Booking Mode is required.</div>
+          </div>
+        </div>
+        
 
 
 

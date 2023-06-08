@@ -85,11 +85,9 @@ export class FormComponent implements OnInit {
       guest_address: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.data.guests.guest_address, [Validators.required]],
       check_out: [this.IsEditRequestedID == "0" ? this.getCurrentDate() : this.datePipe.transform(this.EditFromData.data.booking.booking_till, "yyyy-MM-dd"), Validators.required],
       check_in: [this.IsEditRequestedID == "0" ? this.getCurrentDate() : this.datePipe.transform(this.EditFromData.data.booking.booking_from, "yyyy-MM-dd"), Validators.required],
-      roomCategory: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.data.booking.room_category_name, this.IsEditRequestedID === "0" ? [] : [Validators.required]],
+      roomCategory: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.data.booking.room_category_id, this.IsEditRequestedID === "0" ? [] : [Validators.required]],
       roomPrice: [this.IsEditRequestedID === "0" ? '' : parseFloat(this.EditFromData.data.booking.room_category_price) || 0],
-
-
-
+      bookingMode: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.data.booking.booking_mode]
 
 
     });
@@ -146,7 +144,7 @@ export class FormComponent implements OnInit {
         booking_till: new Date(this.bookingForm.value.check_out),
         // booking_till: this.bookingForm.value.check_out,
         room_category_id: this.bookingForm.value.room_category_id,
-        booking_mode: 'offline',
+        booking_mode: this.bookingForm.value.bookingMode,
         total_amount: total_room_price,
         paid_amount: 0,
         due_amount: 0,
@@ -203,20 +201,6 @@ export class FormComponent implements OnInit {
     this.showModal = false;
   }
 
-
-  // {
-  //   "room_category_id": 1,
-  //   "room_category_name": "Standard",
-  //   "room_category_description": "asd",
-  //   "room_category_price": 3000,
-  //   "room_category_roomcount": 2
-  // }
-
-
-
-
-
-
   CalculateNoOfDays(): number {
     const date1 = new Date(this.bookingForm.value.check_out);
     const date2 = new Date(this.bookingForm.value.check_in);
@@ -231,18 +215,9 @@ export class FormComponent implements OnInit {
 
     return daysDiff == 0 ? 1 : daysDiff;
   }
-  // Calculate the overall price and total room price
 
-
-
-
-  //TODO 
   OverAllPriceCalculation(room_category_id: number, noofdays: number): any {
 
-    // Rest of your code
-    //Room Price
-    // let room_price = Number(this.roomCategories.find(x => x.room_category_id === room_category_id)?.room_category_price);
-    // // this.selectedRoomCategoryPrice = room_price;
     let room_price = this.roomCategories.find(x => x.room_category_id === room_category_id)?.room_category_price;
     console.log("Room Price:", room_price);
     this.ViewData.room_price = room_price;
@@ -263,15 +238,6 @@ export class FormComponent implements OnInit {
       total_room_price: total_room_price
     };
   }
-
-
-
-
-
-
-
-
-
 
   setValidationPattern() {
     const idProofControl = this.bookingForm.get('idproof')!;
