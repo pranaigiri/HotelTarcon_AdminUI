@@ -31,51 +31,62 @@
       <div class="bg-white p-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label for="guest_name" class="block mb-1 text-sm font-medium text-blue-700">Full Name:</label>
-            <span class="text-gray-900">{{ bookingForm.controls['guest_name'].value }}</span>
+            <label for="guest_name" class="block mb-1 text-sm font-medium text-blue-700">
+              <i class="fa-solid fa-person-walking-luggage"></i> Full Name:</label>
+            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.controls['guest_name'].value }}</span>
           </div>
           <div>
-            <label for="guest_email" class="block mb-1 text-sm font-medium text-blue-700">Guest Email:</label>
-            <span class="text-gray-900">{{ bookingForm.controls['guest_email'].value }}</span>
+            <label for="guest_email" class="block mb-1 text-sm font-medium text-blue-700">
+              <i class="fa-solid fa-envelope"></i> Guest Email:</label>
+            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.controls['guest_email'].value }}</span>
           </div>
           <div>
-            <label for="guest_phone" class="block mb-1 text-sm font-medium text-blue-700">Guest Phone:</label>
-            <span class="text-gray-900">{{ bookingForm.controls['guest_phone'].value }}</span>
+            <label for="guest_phone" class="block mb-1 text-sm font-medium text-blue-700">
+              <i class="fa-solid fa-phone"></i>  Guest Phone:</label>
+            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.controls['guest_phone'].value }}</span>
           </div>
           <div>
-            <label for="adults" class="block mb-1 text-sm font-medium text-blue-700">Adults:</label>
-            <span class="text-gray-900">{{ bookingForm.controls['adults'].value }}</span>
+            <label for="adults" class="block mb-1 text-sm font-medium text-blue-700">
+              <i class="fas fa-user mr-1"></i> Adults:</label>
+            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.controls['adults'].value }}</span>
           </div>
           <div>
-            <label for="childrens" class="block mb-1 text-sm font-medium text-blue-700">Children:</label>
-            <span class="text-gray-900">{{ bookingForm.controls['childrens'].value }}</span>
+            <label for="childrens" class="block mb-1 text-sm font-medium text-blue-700">
+              <i class="fa-solid fa-children"></i> Childrens:</label>
+            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.controls['childrens'].value }}</span>
           </div>
           <div>
-            <label for="check_in" class="block mb-1 text-sm font-medium text-blue-700">Check-in Date:</label>
-            <span class="text-gray-900">{{ bookingForm.controls['check_in'].value }}</span>
+            <label for="check_in" class="block mb-1 text-sm font-medium text-blue-700">
+              <i class="fa-solid fa-calendar-plus"></i> Check-in Date:</label>
+            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.controls['check_in'].value }}</span>
           </div>
           <div>
-            <label for="check_out" class="block mb-1 text-sm font-medium text-blue-700">Check-out Date:</label>
-            <span class="text-gray-900">{{ bookingForm.controls['check_out'].value }}</span>
+            <label for="check_out" class="block mb-1 text-sm font-medium text-blue-700">
+              <i class="fa-solid fa-calendar-check"></i> Check-out Date:</label>
+            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.controls['check_out'].value }}</span>
           </div>
           <div>
-            <label for="roomCategory" class="block mb-1 text-sm font-medium text-blue-700">Room Category:</label>
-            <span class="text-gray-900">{{ bookingForm.controls['roomCategory'].value }}</span>
+            <label for="roomCategory" class="block mb-1 text-sm font-medium text-blue-700">
+              <i class="fas fa-bed mr-1"></i> Room Category:</label>
+            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.controls['roomCategory'].value }}</span>
           </div>
 
           <div>
-            <label for="roomPrice" class="block mb-1 text-sm font-medium text-blue-700">Total Room Price :</label>
-            <span class="text-gray-900"> <span>&#8377;</span> {{ totalPrice }}</span> <!-- Add this line -->
+            <label for="roomPrice" class="block mb-1 text-sm font-medium text-blue-700">
+              <i class="fas fa-money-bill-wave mr-1"></i> Total Room Price :</label>
+            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1"> <span>&#8377;</span> {{ totalPrice }}</span> <!-- Add this line -->
           </div>
           <div>
-            <label for="bookingMode" class="block mb-1 text-sm font-medium text-blue-700">Booking Mode:</label>
-            <span class="text-gray-900">{{ bookingForm.value.bookingMode }}</span>
+            <label for="bookingMode" class="block mb-1 text-sm font-medium text-blue-700">
+              <i class="fas fa-building mr-1"></i> Booking Mode:</label>
+            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.value.bookingMode }}</span>
           </div>
 
 
           <div class="col-span-2">
-            <label for="guest_address" class="block mb-1 text-sm font-medium text-blue-700">Guest Address:</label>
-            <span class="text-gray-900">{{ bookingForm.controls['guest_address'].value }}</span>
+            <label for="guest_address" class="block mb-1 text-sm font-medium text-blue-700">
+              <i class="fa-solid fa-address-book"></i> Guest Address:</label>
+            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.controls['guest_address'].value }}</span>
           </div>
 
         </div>
