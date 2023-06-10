@@ -25,14 +25,14 @@
         </div>
         <div>
           <label for="booking_from" class="block mb-1 text-sm font-medium text-blue-700">
-            <i class="fa-solid fa-calendar-plus"></i> Booking From:</label>
+            <i class="fa-solid fa-calendar-plus"></i> Check In :</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
             bookingData.checkin | date :"dd-MMM-yyyy" }}</span>
         </div>
         <div>
           <label for="booking_till" class="block mb-1 text-sm font-medium text-blue-700">
-            <i class="fa-solid fa-calendar-check"></i> Booking Till:</label>
+            <i class="fa-solid fa-calendar-check"></i> Check Out:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
             bookingData.checkout | date :"dd-MMM-yyyy" }}</span>
@@ -93,28 +93,35 @@
             <i class="fas fa-walking mr-1"></i> Payment ID:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.payment_id }}</span>
+            bookingData.payment_id == null ? "-" : bookingData.payment_id  }}</span>
         </div>
         <div>
           <label for="invoice_no" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fas fa-file-invoice mr-1"></i> Invoice No:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.invoice_no }}</span>
+            bookingData.invoice_no == null ? "-" : bookingData.invoice_no }}</span>
         </div>
         <div>
           <label for="reference_no" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fas fa-link mr-1"></i> Reference No:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.reference_no }}</span>
+            bookingData.reference_no == null ? "-" : bookingData.reference_no }}</span>
         </div>
         <div>
           <label for="transaction_id" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fas fa-exchange-alt mr-1"></i>  Transaction ID:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.transaction_id }}</span>
+            bookingData.transaction_id == null ? "-" :  bookingData.transaction_id}}</span>
+        </div>
+        <div>
+          <label for="upi_id" class="block mb-1 text-sm font-medium text-blue-700">
+            <i class="fas fa-exchange-alt mr-1"></i>  UPI ID:</label>
+          <span
+            class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
+            bookingData.upi_id == null ? "-" :  bookingData.upi_id}}</span>
         </div>
         <div>
           <label for="total_amount" class="block mb-1 text-sm font-medium text-blue-700">
@@ -178,13 +185,6 @@
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
             bookingData.guest_email }}</span>
-        </div>
-        <div>
-          <label for="guest_total" class="block mb-1 text-sm font-medium text-blue-700">
-            <i class="fa-solid fa-people-group"></i> Guest Total:</label>
-          <span
-            class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.guest_total }}</span>
         </div>
         <div>
           <label for="adults" class="block mb-1 text-sm font-medium text-blue-700">

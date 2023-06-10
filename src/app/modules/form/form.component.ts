@@ -78,15 +78,17 @@ export class FormComponent implements OnInit {
       guest_email: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.guest_email, [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]],
       guest_phone: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.guest_phone, [Validators.required, Validators.pattern(/^\d{10}$/)]],
       adults: [this.IsEditRequestedID == "0" ? '' :  this.EditFromData.adults == 0 ? '' : this.EditFromData.adults, [Validators.required]],
-      idproof: ['', [Validators.required]],
-      idproofvalue: [{ value: '', disabled: true }, [Validators.required, Validators.pattern('')]],
+      idproof: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.document_type == null ? '' : this.EditFromData.document_type, [Validators.required]],
+      idproofvalue: [{ value: this.IsEditRequestedID === "0" ? '' : this.EditFromData.document_uniqueid == null ? '' : this.EditFromData.document_uniqueid, disabled: true }, [Validators.required, Validators.pattern('')]],
       childrens: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.childrens == 0 ? '' : this.EditFromData.childrens, [Validators.required]],
       guest_address: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.guest_address, [Validators.required]],
       check_out: [this.IsEditRequestedID == "0" ? this.getCurrentDate() : this.datePipe.transform(this.EditFromData.checout, "yyyy-MM-dd"), Validators.required],
       check_in: [this.IsEditRequestedID == "0" ? this.getCurrentDate() : this.datePipe.transform(this.EditFromData.checkin, "yyyy-MM-dd"), Validators.required],
       roomCategory: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.room_category_id == 0 ? '' :this.EditFromData.room_category_id , this.IsEditRequestedID === "0" ? [] : [Validators.required]],
       roomPrice: [this.IsEditRequestedID === "0" ? '' : parseFloat(this.EditFromData.room_category_price) || 0],
-      bookingMode: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.booking_mode]
+      bookingMode: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.booking_mode],
+      upi_id :  [this.IsEditRequestedID === "0" ? '' : this.EditFromData.upi_id],
+      transaction_id :  [this.IsEditRequestedID === "0" ? '' : this.EditFromData.transaction_id]
 
 
     });
@@ -136,7 +138,7 @@ export class FormComponent implements OnInit {
       this.totalPrice = total_room_price;
       //Initialising Data
       let postObj: any = {
-        booking_id: 'asdasd',
+        booking_id: null,
         booking_date: new Date(),
         // booking_from: this.bookingForm.value.check_in,
         booking_from: new Date(this.bookingForm.value.check_in),
@@ -144,11 +146,14 @@ export class FormComponent implements OnInit {
         // booking_till: this.bookingForm.value.check_out,
         room_category_id: this.bookingForm.value.room_category_id,
         booking_mode: this.bookingForm.value.bookingMode,
-        total_amount: total_room_price,
+        total_amount: calculationResult.overallprice,
+        room_price: total_room_price,
         paid_amount: 0,
         due_amount: 0,
         payment_status: 'Paid',
-        upi_id: 'cbpankajrawat@ybl',
+        booking_status:'Arriving',
+        upi_id: this.bookingForm.value.upi_id.trim() == "" ? null : this.bookingForm.value.upi_id,
+        transaction_id:this.bookingForm.value.transaction_id.trim() == "" ? null :this.bookingForm.value.transaction_id,
         guest_id: 0,
         guest_name: this.bookingForm.value.guest_name,
         guest_phone: this.bookingForm.value.guest_phone,
@@ -156,10 +161,16 @@ export class FormComponent implements OnInit {
         guest_email: this.bookingForm.value.guest_email,
         guest_total: Number(this.bookingForm.value.adults) + Number(this.bookingForm.value.childrens),
         adults: this.bookingForm.value.adults,
-        childrens: this.bookingForm.value.childrens
+        childrens: this.bookingForm.value.childrens,
+        payment_id:null,
+        order_id :null,
+        invoice_no :null,
+        reference_no :null,
+        document_type :this.bookingForm.value.idproof.trim() == "" ? null : this.bookingForm.value.idproof ,
+        document_uniqueid:this.bookingForm.value.idproof.trim() == "" ? null :this.bookingForm.value.idproofvalue
       };
 
-      this.apiService.postData("Booking/OfflineBooking", postObj).subscribe((res: any) => {
+      this.apiService.postData("Booking/InsertBooking", postObj).subscribe((res: any) => {
         console.log("Response Success !");
         this.isFormSubmittedSuccessfully = true;
       },
@@ -187,7 +198,9 @@ export class FormComponent implements OnInit {
       check_out: this.getCurrentDate(),
       check_in: this.getCurrentDate(),
       roomCategory: '',
-      guest_address: ''
+      guest_address: '',
+      upi_id: '',
+      transaction_id: '',
     });
     this.submitted = false;
     this.showErrorAlert = false;
