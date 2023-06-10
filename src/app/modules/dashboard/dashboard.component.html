@@ -55,7 +55,7 @@
             </div>
             <div>
               <dt class="text-sm font-medium text-gray-500">Payment in Total</dt>
-              <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{{this.keyMetrics.sum_totalamount}}</dd>
+              <dd class="mt-1 text-3xl font-semibold tracking-tight text-gray-900"><span>&#8377;</span>{{this.keyMetrics.sum_totalamount}}</dd>
             </div>
           </div>
         </div>
@@ -99,15 +99,15 @@
               </td>
               <!-- BOOKING DATE -->
               <td class="px-6 py-4 border-b dark:border-gray-700">
-                {{booking.booking.booking_date | date:'yyyy-MM-dd'}}
+                {{booking.booking.booking_date | date:'yyyy-MMM-dd'}}
               </td>
               <!-- CHECK-IN -->
               <td class="px-6 py-4 border-b dark:border-gray-700">
-                {{booking.booking.booking_from | date:'yyyy-MM-dd'}}
+                {{booking.booking.booking_from | date:'yyyy-MMM-dd'}}
               </td>
               <!-- CHECK-OUT -->
               <td class="px-6 py-4 border-b dark:border-gray-700">
-                {{booking.booking.booking_till | date:'yyyy-MM-dd'}}
+                {{booking.booking.booking_till | date:'yyyy-MMM-dd'}}
               </td>
               <!-- BOOKING MODE -->
               <td class="px-6 py-4 border-b dark:border-gray-700">

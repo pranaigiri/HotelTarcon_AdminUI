@@ -37,9 +37,11 @@ export class DashboardComponent implements OnInit {
 
   GetKeyMetrics(){
     this.apiService.getData("Booking/getkeymetrics").subscribe((res:any)=>{
-      this.keyMetrics.bookingcount = res.result.bookingcount==null?0:res.result.bookingcount;
-      this.keyMetrics.guesttotalsum = res.result.guesttotalsum==null?0:res.result.guesttotalsum;
-      this.keyMetrics.sum_totalamount = res.result.sum_totalamount==null?0:res.result.sum_totalamount
+      let currencyFormat = new Intl.NumberFormat('en-IN',{minimumFractionDigits:2});
+      let ThousandFormat = new Intl.NumberFormat('en-IN',{minimumFractionDigits:0});
+      this.keyMetrics.bookingcount = res.result.bookingcount==null?0:ThousandFormat.format(Number(res.result.bookingcount));
+      this.keyMetrics.guesttotalsum = res.result.guesttotalsum==null?0:ThousandFormat.format(Number(res.result.guesttotalsum));
+      this.keyMetrics.sum_totalamount = res.result.sum_totalamount==null?0:currencyFormat.format(Number(res.result.sum_totalamount));
     })
   }
 
