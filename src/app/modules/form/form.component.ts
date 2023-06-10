@@ -74,7 +74,6 @@ export class FormComponent implements OnInit {
 
   initializeForm() {
     console.log("Form Initialization", this.getCurrentDate());
-    alert( this.EditFromData.room_category_id);
     this.bookingForm = this.formBuilder.group({
       guest_name: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.guest_name, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
       guest_email: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.guest_email, [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]],
@@ -89,8 +88,10 @@ export class FormComponent implements OnInit {
       roomCategory: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.room_category_id == 0 ? '' :this.EditFromData.room_category_id , this.IsEditRequestedID === "0" ? [] : [Validators.required]],
       roomPrice: [this.IsEditRequestedID === "0" ? '' : parseFloat(this.EditFromData.room_category_price) || 0],
       bookingMode: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.booking_mode],
-      upi_id :  [this.IsEditRequestedID === "0" ? '' : this.EditFromData.upi_id],
-      transaction_id :  [this.IsEditRequestedID === "0" ? '' : this.EditFromData.transaction_id]
+      upi_id: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.upi_id, [Validators.pattern(/^[a-zA-Z0-9.-]{2,256}@[a-zA-Z][a-zA-Z]{2,64}$/)]],
+      transaction_id: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.transaction_id, [Validators.pattern(/^\d[A-Z]\d{2}[A-Z]\d{3}[A-Z]{2}$/)]],
+      paymentStatus: ['', Validators.required],
+      partialPaymentAmount: ['']
 
 
     });
@@ -151,8 +152,8 @@ export class FormComponent implements OnInit {
         total_amount: calculationResult.overallprice,
         room_price: total_room_price,
         paid_amount: 0,
-        due_amount: 0,
-        payment_status: 'Paid',
+        due_amount: this.bookingForm.value.partialPaymentAmount,
+        payment_status: this.bookingForm.value.paymentStatus,
         booking_status:'Arriving',
         upi_id: this.bookingForm.value.upi_id == null ? null : this.bookingForm.value.upi_id.trim() == "" ? null : this.bookingForm.value.upi_id,
         transaction_id:this.bookingForm.value.transaction_id == null ? null : this.bookingForm.value.transaction_id.trim() == "" ? null :this.bookingForm.value.transaction_id,

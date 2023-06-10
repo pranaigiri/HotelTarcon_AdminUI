@@ -27,7 +27,7 @@ export class DetailsViewComponent implements OnInit {
     this.apiService.getDataById("Booking/GetBookingBySearchParam", bookingId).subscribe((res: any) => {
       if (res.result) {
         this.bookingData = res.result;
-        console.log(this.bookingData.total_amount, "total price without GST");
+        console.log(this.bookingData, "total price without GST");
         this.roomCategoryID = this.bookingData.room_category_id;
       }
       else {
@@ -40,7 +40,7 @@ export class DetailsViewComponent implements OnInit {
     this.apiService.getData("Common/GetAllRoomCategories").subscribe((res: any) => {
       console.log("Response Success GetAllRoomCategories!");
       this.roomCategories = res.result;
-      this.roomCategoryID=1;
+      this.roomCategoryID=2;
       this.roomDetails = this.roomCategories.find((category: any) => category.room_category_id === this.roomCategoryID)
     });
   }

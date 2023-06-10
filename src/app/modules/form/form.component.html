@@ -15,83 +15,7 @@
       </p>
     </div>
 
-    <!-- <div class="alert alert-danger w-full text-white text-center bg-red-500 p-2"  *ngIf="showErrorAlert && (submitted || bookingForm.invalid)" >
-      Error: Please fill in all the required fields correctly.
-    </div> -->
 
-    <!-- <section class="col-span-1 md:col-span-2 p-4" *ngIf="bookingForm.valid && submitted && isFormSubmittedSuccessfully"> -->
-    <section class="col-span-1 md:col-span-2 p-4 lg:w-1/2 mx-auto md:w-full sm:w-full"
-      *ngIf="bookingForm.valid && submitted && isFormSubmittedSuccessfully">
-      <div class="w-full border cursor-pointer header-bg">
-        <div class="flex justify-center items-center space-x-2 py-2">
-          <i class="fa-solid fa-hourglass-end text-[#FFA500]"></i>
-          <p class="font-semibold text-gray-800">Overview of Provided Details</p>
-        </div>
-      </div>
-      <div class="bg-white p-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label for="guest_name" class="block mb-1 text-sm font-medium text-blue-700">
-              <i class="fa-solid fa-person-walking-luggage"></i> Full Name:</label>
-            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.controls['guest_name'].value }}</span>
-          </div>
-          <div>
-            <label for="guest_email" class="block mb-1 text-sm font-medium text-blue-700">
-              <i class="fa-solid fa-envelope"></i> Guest Email:</label>
-            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.controls['guest_email'].value }}</span>
-          </div>
-          <div>
-            <label for="guest_phone" class="block mb-1 text-sm font-medium text-blue-700">
-              <i class="fa-solid fa-phone"></i>  Guest Phone:</label>
-            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.controls['guest_phone'].value }}</span>
-          </div>
-          <div>
-            <label for="adults" class="block mb-1 text-sm font-medium text-blue-700">
-              <i class="fas fa-user mr-1"></i> Adults:</label>
-            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.controls['adults'].value }}</span>
-          </div>
-          <div>
-            <label for="childrens" class="block mb-1 text-sm font-medium text-blue-700">
-              <i class="fa-solid fa-children"></i> Childrens:</label>
-            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.controls['childrens'].value }}</span>
-          </div>
-          <div>
-            <label for="check_in" class="block mb-1 text-sm font-medium text-blue-700">
-              <i class="fa-solid fa-calendar-plus"></i> Check-in Date:</label>
-            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.controls['check_in'].value }}</span>
-          </div>
-          <div>
-            <label for="check_out" class="block mb-1 text-sm font-medium text-blue-700">
-              <i class="fa-solid fa-calendar-check"></i> Check-out Date:</label>
-            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.controls['check_out'].value }}</span>
-          </div>
-          <div>
-            <label for="roomCategory" class="block mb-1 text-sm font-medium text-blue-700">
-              <i class="fas fa-bed mr-1"></i> Room Category:</label>
-            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.controls['roomCategory'].value }}</span>
-          </div>
-
-          <div>
-            <label for="roomPrice" class="block mb-1 text-sm font-medium text-blue-700">
-              <i class="fas fa-money-bill-wave mr-1"></i> Total Room Price :</label>
-            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1"> <span>&#8377;</span> {{ totalPrice }}</span> <!-- Add this line -->
-          </div>
-          <div>
-            <label for="bookingMode" class="block mb-1 text-sm font-medium text-blue-700">
-              <i class="fas fa-building mr-1"></i> Booking Mode:</label>
-            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.value.bookingMode }}</span>
-          </div>
-
-
-          <div class="col-span-2">
-            <label for="guest_address" class="block mb-1 text-sm font-medium text-blue-700">
-              <i class="fa-solid fa-address-book"></i> Guest Address:</label>
-            <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{ bookingForm.controls['guest_address'].value }}</span>
-          </div>
-
-        </div>
-      </div>
-    </section>
     <section *ngIf="!bookingForm.valid || !submitted || !isFormSubmittedSuccessfully">
       <div class="w-full border cursor-pointer header-bg">
         <div class="flex justify-center items-center space-x-2 py-2">
@@ -354,17 +278,20 @@
             <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
               <i class="fa-solid fa-calendar-alt text-muted"></i>
             </span>
-            <select id="booking-mode" formControlName="bookingMode" class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+            <select id="booking-mode" formControlName="bookingMode"
+              class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
               <option value="" selected disabled>Select Booking Mode</option>
               <option value="offline">Offline</option>
               <option value="online">Online</option>
             </select>
           </div>
-          <div *ngIf="formControls['bookingMode'].invalid && (formControls['bookingMode'].dirty || formControls['bookingMode'].touched)" class="text-red-500">
+          <div
+            *ngIf="formControls['bookingMode'].invalid && (formControls['bookingMode'].dirty || formControls['bookingMode'].touched)"
+            class="text-red-500">
             <div *ngIf="formControls['bookingMode'].errors?.['required']">Booking Mode is required.</div>
           </div>
         </div>
-        
+
 
 
         <div class="form-group">
@@ -374,8 +301,13 @@
               class="w-full rounded-lg border px-3 py-2 pl-10" />
             <i class="fas fa-money-check absolute top-3 left-3 text-gray-400"></i>
           </div>
+          <div
+            *ngIf="formControls['upi_id'].invalid && (formControls['upi_id'].dirty || formControls['upi_id'].touched)"
+            class="text-red-500">
+            <div *ngIf="formControls['upi_id'].errors?.['pattern']">Invalid UPI ID format.</div>
+          </div>
         </div>
-        
+
         <div class="form-group">
           <label for="transaction_id" class="block mb-1 text-sm font-medium text-gray-700">Transaction ID</label>
           <div class="relative">
@@ -383,15 +315,44 @@
               class="w-full rounded-lg border px-3 py-2 pl-10" />
             <i class="fas fa-credit-card absolute top-3 left-3 text-gray-400"></i>
           </div>
+          <div
+            *ngIf="formControls['transaction_id'].invalid && (formControls['transaction_id'].dirty || formControls['transaction_id'].touched)"
+            class="text-red-500">
+            <div *ngIf="formControls['transaction_id'].errors?.['pattern']">Invalid Transaction ID format.</div>
+          </div>
+        </div>
+        <!-- PAYMENT STATUS -->
+        <div class="form-group col-span-1 md:col-span-1 xl:col-span-1 text-start">
+          <label for="payment-status" class="block mb-1 text-sm font-medium text-gray-700">Payment Status</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+              <i class="fas fa-rupee-sign text-gray-400"></i>
+            </span>
+            <select id="payment-status" class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+              formControlName="paymentStatus">
+              <option value="" selected disabled>Select Payment Status</option>
+              <option value="paid">Paid</option>
+              <option value="unpaid">Unpaid</option>
+              <option value="partially_paid">Partially Paid</option>
+            </select>
+          </div>
         </div>
         
-
-
-
-
-
-
-
+        <div class="form-group">
+          <label for="partial-payment-amount" class="block mb-1 text-sm font-medium text-gray-700">Partial Payment Amount</label>
+          <div class="relative">
+            <input type="number" id="partial-payment-amount" placeholder="Enter Partial Payment Amount"
+              formControlName="partialPaymentAmount" class="w-full rounded-lg border px-3 py-2 pl-10" />
+            <i class="fas fa-money-bill-wave-alt absolute top-3 left-3 text-gray-400"></i>
+          </div>
+        </div>
+        
+        
+        
+        
+        
+        
+        
 
 
         <div class="col-span-1 md:col-span-2 lg:col-span-3 flex justify-end">
