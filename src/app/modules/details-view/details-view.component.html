@@ -8,6 +8,10 @@
   <div class="bg-white p-4">
     <div>
       <div class="grid xl:grid-cols-3 md:grid-cols-3 gap-4 sm:grid-cols-2 xs:grid-cols-1">
+
+        
+
+        
         <div>
           <label for="booking_id" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fas fa-id-card mr-1"></i> Booking ID:</label>
@@ -44,12 +48,14 @@
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
             roomDetails.room_category_name }}</span>
         </div>
+
+        
         <div>
           <label for="room_category_id" class="block mb-1 text-sm font-medium text-blue-700">
-          <i class="fa-solid fa-indian-rupee-sign"></i>  Room Category Price:</label>
+          <i class="fa-solid fa-indian-rupee-sign"></i>  Total Room Price:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            roomDetails.room_category_price }} <span class="text-yellow-600 d-block">
+              bookingData.room_price }} <span class="text-yellow-600 d-block">
               <div class="relative inline-block">
                 <!-- Icon or trigger element -->
                 <i class="fa fa-question-circle ms-4 me-2 text-yellow-500 cursor-pointer"
@@ -67,9 +73,11 @@
                 </div>
                 
               </div>
+              {{this.gstPercentile}}% -
               GST Applicable
-              : {{roomDetails.room_category_price}}</span></span>
+              : {{gspApplicable}}</span></span>
         </div>
+
         <div>
           <label for="booking_mode" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fas fa-building mr-1"></i> Booking Mode:</label>
@@ -144,6 +152,8 @@
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
             bookingData.due_amount }}</span>
         </div>
+
+
         <div>
           <label for="payment_status" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fa-solid fa-money-check"></i> Payment Status:</label>
@@ -202,6 +212,9 @@
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
             bookingData.childrens }}</span>
         </div>
+
+
+
       </div>
     </div>
   </div>

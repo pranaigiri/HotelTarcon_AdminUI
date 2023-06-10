@@ -13,6 +13,11 @@
         <span class="font-bold"><i class="fa fa-info-circle text-blue-700 pr-1"></i>Note:</span> A hard copy of any
         identification proof is mandatory and must be physically collected.
       </p>
+      <p class="text-sm text-gray-700">
+        <span class="font-bold"><i class="fa fa-info-circle text-blue-700 pr-1"></i>Note:</span> Fields marked with an asterisk 
+        (<span class="text-red-500 text-lg"> * </span>) are mandatory.
+      </p>
+      
     </div>
 
 
@@ -34,14 +39,14 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
           <div class="form-group">
-            <label for="guest_name" class="block mb-1 text-sm font-medium text-gray-700">Full Name</label>
+            <label for="guest_name" class="block mb-1 text-sm font-medium text-gray-700">Full Name <span class="text-red-500 text-lg"> * </span></label>
             <div class="relative">
               <input type="text" id="guest_name" placeholder="Enter Full Name" formControlName="guest_name"
                 minlength="3" maxlength="15" class="w-full rounded-lg border px-3 py-2 pl-10" />
               <i class="fas fa-user absolute top-3 left-3 text-gray-400"></i>
             </div>
             <div
-              *ngIf="formControls['guest_name'].invalid && (formControls['guest_name'].dirty || formControls['guest_name'].touched)"
+              *ngIf="formControls['guest_name'].invalid && (formControls['guest_name'].dirty || formControls['guest_name'].touched || submitted )"
               class="text-red-500">
               <div *ngIf="formControls['guest_name'].errors?.['required']">Full Name is required.</div>
               <div *ngIf="formControls['guest_name'].errors?.['minlength']">Minimum length of 3 characters is required.
@@ -52,14 +57,14 @@
           </div>
 
           <div class="form-group">
-            <label for="guest_email" class="block mb-1 text-sm font-medium text-gray-700">Email</label>
+            <label for="guest_email" class="block mb-1 text-sm font-medium text-gray-700">Email <span class="text-red-500 text-lg"> * </span></label>
             <div class="relative">
               <input type="text" id="guest_email" placeholder="Enter Email" formControlName="guest_email"
                 class="w-full rounded-lg border px-3 py-2 pl-10" />
               <i class="fas fa-envelope absolute top-3 left-3 text-gray-400"></i>
             </div>
             <div
-              *ngIf="formControls['guest_email'].invalid && (formControls['guest_email'].dirty || formControls['guest_email'].touched)"
+              *ngIf="formControls['guest_email'].invalid && (formControls['guest_email'].dirty || formControls['guest_email'].touched || submitted )"
               class="text-red-500">
               <div *ngIf="formControls['guest_email'].errors?.['required']">Email is required.</div>
               <div *ngIf="formControls['guest_email'].errors?.['pattern']">Invalid email format.</div>
@@ -67,7 +72,7 @@
           </div>
 
           <div class="form-group">
-            <label for="adults" class="block mb-1 text-sm font-medium text-gray-700">Total No. of Adults</label>
+            <label for="adults" class="block mb-1 text-sm font-medium text-gray-700">Total No. of Adults <span class="text-red-500 text-lg"> * </span></label>
             <div class="relative">
               <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
                 <i class="fa-solid fa-user text-muted"></i>
@@ -81,7 +86,7 @@
               </select>
             </div>
             <div
-              *ngIf="formControls['adults'].invalid && (formControls['adults'].dirty || formControls['adults'].touched)"
+              *ngIf="formControls['adults'].invalid && (formControls['adults'].dirty || formControls['adults'].touched || submitted )"
               class="text-red-500">
               <div *ngIf="formControls['adults'].errors?.['required']">Total No. of Adults is required.</div>
             </div>
@@ -101,37 +106,32 @@
                 <option value="3">3</option>
               </select>
             </div>
-            <div
-              *ngIf="formControls['childrens'].invalid && (formControls['childrens'].dirty || formControls['childrens'].touched)"
-              class="text-red-500">
-              <div *ngIf="formControls['childrens'].errors?.['required']">Total No. of Children is required.</div>
-            </div>
           </div>
 
 
           <div class="form-group">
-            <label for="guest_address" class="block mb-1 text-sm font-medium text-gray-700">Address</label>
+            <label for="guest_address" class="block mb-1 text-sm font-medium text-gray-700">Address <span class="text-red-500 text-lg"> * </span></label>
             <div class="relative">
               <input type="text" id="guest_address" placeholder="Enter Address" formControlName="guest_address"
                 class="w-full rounded-lg border px-3 py-2 pl-10" />
               <i class="fas fa-map-marker-alt absolute top-3 left-3 text-gray-400"></i>
             </div>
             <div
-              *ngIf="formControls['guest_address'].invalid && (formControls['guest_address'].dirty || formControls['guest_address'].touched)"
+              *ngIf="formControls['guest_address'].invalid && (formControls['guest_address'].dirty || formControls['guest_address'].touched || submitted)"
               class="text-red-500">
               <div *ngIf="formControls['guest_address'].errors?.['required']">Address is required.</div>
             </div>
           </div>
 
           <div class="form-group">
-            <label for="guest_phone" class="block mb-1 text-sm font-medium text-gray-700">Phone</label>
+            <label for="guest_phone" class="block mb-1 text-sm font-medium text-gray-700">Phone <span class="text-red-500 text-lg"> * </span></label>
             <div class="relative">
               <input type="text" id="guest_phone" placeholder="Enter Phone" formControlName="guest_phone"
                 class="w-full rounded-lg border px-3 py-2 pl-10" />
               <i class="fas fa-phone absolute top-3 left-3 text-gray-400"></i>
             </div>
             <div
-              *ngIf="formControls['guest_phone'].invalid && (formControls['guest_phone'].dirty || formControls['guest_phone'].touched)"
+              *ngIf="formControls['guest_phone'].invalid && (formControls['guest_phone'].dirty || formControls['guest_phone'].touched || submitted)"
               class="text-red-500">
               <div *ngIf="formControls['guest_phone'].errors?.['required']">Phone is required.</div>
               <div *ngIf="formControls['guest_phone'].errors?.['pattern']">Invalid phone format.</div>
@@ -158,7 +158,7 @@
         (ngSubmit)="onSubmit()">
 
         <div class="form-group">
-          <label for="idproof" class="block mb-1 text-sm font-medium text-gray-700">ID Proof Type</label>
+          <label for="idproof" class="block mb-1 text-sm font-medium text-gray-700">ID Proof Type <span class="text-red-500 text-lg"> * </span></label>
           <div class="relative">
             <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
               <i class="fa-solid fa-file-lines text-muted"></i>
@@ -173,14 +173,14 @@
             </select>
           </div>
           <div
-            *ngIf="bookingForm.controls['idproof'].invalid && (bookingForm.controls['idproof'].dirty || bookingForm.controls['idproof'].touched)"
+            *ngIf="bookingForm.controls['idproof'].invalid && (bookingForm.controls['idproof'].dirty || bookingForm.controls['idproof'].touched || submitted)"
             class="text-red-500">
             <div *ngIf="bookingForm.controls['idproof'].errors?.['required']">ID Proof Type is required.</div>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="idproofvalue" class="block mb-1 text-sm font-medium text-gray-700">ID Proof Unique Key</label>
+          <label for="idproofvalue" class="block mb-1 text-sm font-medium text-gray-700">ID Proof Unique Key <span class="text-red-500 text-lg"> * </span></label>
           <div class="relative">
             <input type="text" id="idproofvalue" placeholder="Enter ID Proof Unique Key" formControlName="idproofvalue"
               class="w-full rounded-lg border px-3 py-2 pl-10" />
@@ -188,7 +188,7 @@
           </div>
 
           <div
-            *ngIf="bookingForm.controls['idproofvalue'].invalid && (bookingForm.controls['idproofvalue'].dirty || bookingForm.controls['idproofvalue'].touched)"
+            *ngIf="bookingForm.controls['idproofvalue'].invalid && (bookingForm.controls['idproofvalue'].dirty || bookingForm.controls['idproofvalue'].touched || submitted)"
             class="text-red-500">
             <div *ngIf="bookingForm.controls['idproofvalue'].errors?.['required']">ID Proof Unique Key is required.
             </div>
@@ -217,45 +217,45 @@
         (ngSubmit)="onSubmit()">
 
         <div class="form-group col-span-1 md:col-span-1 xl:col-span-1">
-          <label for="check_in" class="block mb-1 text-sm font-medium text-gray-700">Check-in</label>
+          <label for="check_in" class="block mb-1 text-sm font-medium text-gray-700">Check-in <span class="text-red-500 text-lg"> * </span></label>
           <div class="relative">
             <input type="date" id="check_in" placeholder="Check-in" formControlName="check_in"
               class="w-full rounded-lg border px-3 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               min="{{ getCurrentDate() }}" [value]="getCurrentDate()" />
             <i class="fas fa-calendar-alt absolute top-3 left-3 text-gray-400"></i>
           </div>
-          <div
-            *ngIf="formControls['check_in'].invalid && (formControls['check_in'].dirty || formControls['check_in'].touched)"
+          <!-- <div
+            *ngIf="formControls['check_in'].invalid && (formControls['check_in'].dirty || formControls['check_in'].touched || submitted)"
             class="text-red-500">
             <div *ngIf="formControls['check_in'].errors?.['required']">Check-in date is required.</div>
-          </div>
+          </div> -->
         </div>
 
 
         <div class="form-group col-span-1 md:col-span-1 xl:col-span-1">
-          <label for="check_out" class="block mb-1 text-sm font-medium text-gray-700">Check-out</label>
+          <label for="check_out" class="block mb-1 text-sm font-medium text-gray-700">Check-out <span class="text-red-500 text-lg"> * </span></label>
           <div class="relative">
             <input type="date" id="check_out" placeholder="Check-out" formControlName="check_out"
               class="w-full rounded-lg border px-3 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               min="{{ getCurrentDate() }}" [value]="getCurrentDate()" />
             <i class="fas fa-calendar-alt absolute top-3 left-3 text-gray-400"></i>
           </div>
-          <div
-            *ngIf="formControls['check_out'].invalid && (formControls['check_out'].dirty || formControls['check_out'].touched)"
+          <!-- <div
+            *ngIf="formControls['check_out'].invalid && (formControls['check_out'].dirty || formControls['check_out'].touched || submitted)"
             class="text-red-500">
             <div *ngIf="formControls['check_out'].errors?.['required']">Check-out date is required.</div>
-          </div>
+          </div> -->
         </div>
 
 
 
         <div class="form-group col-span-1 md:col-span-1 xl:col-span-1 text-start">
-          <label for="room-category" class="block mb-1 text-sm font-medium text-gray-700">Room Category</label>
+          <label for="roomCategory" class="block mb-1 text-sm font-medium text-gray-700">Room Category <span class="text-red-500 text-lg"> * </span></label>
           <div class="relative">
             <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
               <i class="fa-solid fa-bed text-muted"></i>
             </span>
-            <select id="room-category" formControlName="roomCategory"
+            <select id="roomCategory" formControlName="roomCategory"
               class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
               <option selected disabled value="">Select Room Category</option>
               <option *ngFor="let category of roomCategories" [value]="category.room_category_id">
@@ -266,19 +266,19 @@
 
           </div>
           <div
-            *ngIf="formControls['roomCategory'].invalid && (formControls['roomCategory'].dirty || formControls['roomCategory'].touched)"
+            *ngIf="formControls['roomCategory'].invalid && (formControls['roomCategory'].dirty || formControls['roomCategory'].touched || submitted)"
             class="text-red-500">
             <div *ngIf="formControls['roomCategory'].errors?.['required']">Room Category is required.</div>
           </div>
         </div>
 
         <div class="form-group col-span-1 md:col-span-1 xl:col-span-1 text-start">
-          <label for="booking-mode" class="block mb-1 text-sm font-medium text-gray-700">Booking Mode</label>
+          <label for="bookingMode" class="block mb-1 text-sm font-medium text-gray-700">Booking Mode <span class="text-red-500 text-lg"> * </span></label>
           <div class="relative">
             <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
               <i class="fa-solid fa-calendar-alt text-muted"></i>
             </span>
-            <select id="booking-mode" formControlName="bookingMode"
+            <select id="bookingMode" formControlName="bookingMode"
               class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
               <option value="" selected disabled>Select Booking Mode</option>
               <option value="offline">Offline</option>
@@ -286,7 +286,7 @@
             </select>
           </div>
           <div
-            *ngIf="formControls['bookingMode'].invalid && (formControls['bookingMode'].dirty || formControls['bookingMode'].touched)"
+            *ngIf="formControls['bookingMode'].invalid && (formControls['bookingMode'].dirty || formControls['bookingMode'].touched || submitted )"
             class="text-red-500">
             <div *ngIf="formControls['bookingMode'].errors?.['required']">Booking Mode is required.</div>
           </div>
@@ -302,7 +302,7 @@
             <i class="fas fa-money-check absolute top-3 left-3 text-gray-400"></i>
           </div>
           <div
-            *ngIf="formControls['upi_id'].invalid && (formControls['upi_id'].dirty || formControls['upi_id'].touched)"
+            *ngIf="formControls['upi_id'].invalid && (formControls['upi_id'].dirty || formControls['upi_id'].touched || submitted)"
             class="text-red-500">
             <div *ngIf="formControls['upi_id'].errors?.['pattern']">Invalid UPI ID format.</div>
           </div>
@@ -316,7 +316,7 @@
             <i class="fas fa-credit-card absolute top-3 left-3 text-gray-400"></i>
           </div>
           <div
-            *ngIf="formControls['transaction_id'].invalid && (formControls['transaction_id'].dirty || formControls['transaction_id'].touched)"
+            *ngIf="formControls['transaction_id'].invalid && (formControls['transaction_id'].dirty || formControls['transaction_id'].touched || submitted)"
             class="text-red-500">
             <div *ngIf="formControls['transaction_id'].errors?.['pattern']">Invalid Transaction ID format.</div>
           </div>

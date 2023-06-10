@@ -85,9 +85,9 @@ export class FormComponent implements OnInit {
       guest_address: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.guest_address, [Validators.required]],
       check_out: [this.IsEditRequestedID == "0" ? this.getCurrentDate() : this.datePipe.transform(this.EditFromData.checkout, "yyyy-MM-dd"), Validators.required],
       check_in: [this.IsEditRequestedID == "0" ? this.getCurrentDate() : this.datePipe.transform(this.EditFromData.checkin, "yyyy-MM-dd"), Validators.required],
-      roomCategory: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.room_category_id == 0 ? '' :this.EditFromData.room_category_id , this.IsEditRequestedID === "0" ? [] : [Validators.required]],
+      roomCategory: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.room_category_id == 0 ? '' :this.EditFromData.room_category_id , Validators.required],
       roomPrice: [this.IsEditRequestedID === "0" ? '' : parseFloat(this.EditFromData.room_category_price) || 0],
-      bookingMode: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.booking_mode],
+      bookingMode: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.booking_mode, Validators.required],
       upi_id: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.upi_id, [Validators.pattern(/^[a-zA-Z0-9.-]{2,256}@[a-zA-Z][a-zA-Z]{2,64}$/)]],
       transaction_id: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.transaction_id, [Validators.pattern(/^\d[A-Z]\d{2}[A-Z]\d{3}[A-Z]{2}$/)]],
       paymentStatus: ['', Validators.required],
@@ -111,7 +111,7 @@ export class FormComponent implements OnInit {
     this.isFormSubmittedSuccessfully = false;
     this.submitted = true;
     if (this.bookingForm.invalid) {
-      this.submitted = false;
+      // this.submitted = false;
       this.showErrorAlert = true;
       this.apiService.handleLoginError(this.errorMsg);
 
@@ -141,7 +141,7 @@ export class FormComponent implements OnInit {
       this.totalPrice = total_room_price;
       //Initialising Data
       let postObj: any = {
-        booking_id: null,
+        booking_id: this.IsEditRequestedID === "0" ? null : this.EditFromData.booking_id,
         booking_date: new Date(),
         // booking_from: this.bookingForm.value.check_in,
         checkin: new Date(this.bookingForm.value.check_in),
@@ -173,6 +173,8 @@ export class FormComponent implements OnInit {
         document_uniqueid:this.bookingForm.value.idproofvalue == null ? null : this.bookingForm.value.idproofvalue.trim() == "" ? null :this.bookingForm.value.idproofvalue
       };
 
+      if(this.IsEditRequestedID!="0"){
+        //New Insert Booking
       this.apiService.postData("Booking/InsertBooking", postObj).subscribe((res: any) => {
         console.log("Response Success !");
         this.isFormSubmittedSuccessfully = true;
@@ -185,6 +187,20 @@ export class FormComponent implements OnInit {
         })
       // Form is valid, proceed with saving data
 
+      }
+      else{
+        //Edit Exisiting Booking Details
+        this.apiService.postData("Booking/EditBookingDetails", postObj).subscribe((res: any) => {
+          console.log("Response Success !");
+          this.isFormSubmittedSuccessfully = true;
+          let GeneratedBookingId= res.result; 
+          console.log(res.result);
+          this.router.navigate(['/admin/details-view', GeneratedBookingId]);
+        },
+          (error: any) => {
+            this.isFormSubmittedSuccessfully = false;
+          })
+      }
 
     } else {
       console.log("InValid Form Details")
