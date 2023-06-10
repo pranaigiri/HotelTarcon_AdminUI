@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { error } from 'console';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -30,7 +30,8 @@ export class FormComponent implements OnInit {
     total_room_price: 0,
     room_price: 0
   }
-  constructor(private formBuilder: FormBuilder, private datePipe: DatePipe, private apiService: ApiService, private route: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder, private datePipe: DatePipe,
+     private apiService: ApiService, private route: ActivatedRoute,private router:Router) { }
 
   ngOnInit() {
     this.initializeForm();
@@ -73,6 +74,7 @@ export class FormComponent implements OnInit {
 
   initializeForm() {
     console.log("Form Initialization", this.getCurrentDate());
+    alert( this.EditFromData.room_category_id);
     this.bookingForm = this.formBuilder.group({
       guest_name: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.guest_name, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
       guest_email: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.guest_email, [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]],
@@ -82,7 +84,7 @@ export class FormComponent implements OnInit {
       idproofvalue: [{ value: this.IsEditRequestedID === "0" ? '' : this.EditFromData.document_uniqueid == null ? '' : this.EditFromData.document_uniqueid, disabled: true }, [Validators.required, Validators.pattern('')]],
       childrens: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.childrens == 0 ? '' : this.EditFromData.childrens, [Validators.required]],
       guest_address: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.guest_address, [Validators.required]],
-      check_out: [this.IsEditRequestedID == "0" ? this.getCurrentDate() : this.datePipe.transform(this.EditFromData.checout, "yyyy-MM-dd"), Validators.required],
+      check_out: [this.IsEditRequestedID == "0" ? this.getCurrentDate() : this.datePipe.transform(this.EditFromData.checkout, "yyyy-MM-dd"), Validators.required],
       check_in: [this.IsEditRequestedID == "0" ? this.getCurrentDate() : this.datePipe.transform(this.EditFromData.checkin, "yyyy-MM-dd"), Validators.required],
       roomCategory: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.room_category_id == 0 ? '' :this.EditFromData.room_category_id , this.IsEditRequestedID === "0" ? [] : [Validators.required]],
       roomPrice: [this.IsEditRequestedID === "0" ? '' : parseFloat(this.EditFromData.room_category_price) || 0],
@@ -141,8 +143,8 @@ export class FormComponent implements OnInit {
         booking_id: null,
         booking_date: new Date(),
         // booking_from: this.bookingForm.value.check_in,
-        booking_from: new Date(this.bookingForm.value.check_in),
-        booking_till: new Date(this.bookingForm.value.check_out),
+        checkin: new Date(this.bookingForm.value.check_in),
+        checkout: new Date(this.bookingForm.value.check_out),
         // booking_till: this.bookingForm.value.check_out,
         room_category_id: this.bookingForm.value.room_category_id,
         booking_mode: this.bookingForm.value.bookingMode,
@@ -152,8 +154,8 @@ export class FormComponent implements OnInit {
         due_amount: 0,
         payment_status: 'Paid',
         booking_status:'Arriving',
-        upi_id: this.bookingForm.value.upi_id.trim() == "" ? null : this.bookingForm.value.upi_id,
-        transaction_id:this.bookingForm.value.transaction_id.trim() == "" ? null :this.bookingForm.value.transaction_id,
+        upi_id: this.bookingForm.value.upi_id == null ? null : this.bookingForm.value.upi_id.trim() == "" ? null : this.bookingForm.value.upi_id,
+        transaction_id:this.bookingForm.value.transaction_id == null ? null : this.bookingForm.value.transaction_id.trim() == "" ? null :this.bookingForm.value.transaction_id,
         guest_id: 0,
         guest_name: this.bookingForm.value.guest_name,
         guest_phone: this.bookingForm.value.guest_phone,
@@ -166,13 +168,16 @@ export class FormComponent implements OnInit {
         order_id :null,
         invoice_no :null,
         reference_no :null,
-        document_type :this.bookingForm.value.idproof.trim() == "" ? null : this.bookingForm.value.idproof ,
-        document_uniqueid:this.bookingForm.value.idproof.trim() == "" ? null :this.bookingForm.value.idproofvalue
+        document_type :this.bookingForm.value.idproof == null ? null : this.bookingForm.value.idproof.trim() == "" ? null : this.bookingForm.value.idproof ,
+        document_uniqueid:this.bookingForm.value.idproofvalue == null ? null : this.bookingForm.value.idproofvalue.trim() == "" ? null :this.bookingForm.value.idproofvalue
       };
 
       this.apiService.postData("Booking/InsertBooking", postObj).subscribe((res: any) => {
         console.log("Response Success !");
         this.isFormSubmittedSuccessfully = true;
+        let GeneratedBookingId= res.result; 
+        console.log(res.result);
+        this.router.navigate(['/admin/details-view', GeneratedBookingId]);
       },
         (error: any) => {
           this.isFormSubmittedSuccessfully = false;
