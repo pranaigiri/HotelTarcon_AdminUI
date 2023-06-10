@@ -13,7 +13,7 @@
             <i class="fas fa-id-card mr-1"></i> Booking ID:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">
-            {{ bookingData.booking.booking_id }}
+            {{ bookingData.booking_id }}
           </span>
         </div>
         <div>
@@ -21,21 +21,21 @@
             <i class="far fa-calendar-alt mr-1"></i> Booking Date:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.booking.booking_date | date :"dd-MMM-yyyy" }}</span>
+            bookingData.booking_date | date :"dd-MMM-yyyy" }}</span>
         </div>
         <div>
           <label for="booking_from" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fa-solid fa-calendar-plus"></i> Booking From:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.booking.booking_from | date :"dd-MMM-yyyy" }}</span>
+            bookingData.checkin | date :"dd-MMM-yyyy" }}</span>
         </div>
         <div>
           <label for="booking_till" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fa-solid fa-calendar-check"></i> Booking Till:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.booking.booking_till | date :"dd-MMM-yyyy" }}</span>
+            bookingData.checkout | date :"dd-MMM-yyyy" }}</span>
         </div>
         <div>
           <label for="room_category_id" class="block mb-1 text-sm font-medium text-blue-700">
@@ -49,16 +49,33 @@
           <i class="fa-solid fa-indian-rupee-sign"></i>  Room Category Price:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            roomDetails.room_category_price }} <span class="text-red-600 d-block"><i
-                class="fa fa-question-circle ms-4 me-2"></i>GST Applicable
-              :{{roomDetails.room_category_price}}</span></span>
+            roomDetails.room_category_price }} <span class="text-yellow-600 d-block">
+              <div class="relative inline-block">
+                <!-- Icon or trigger element -->
+                <i class="fa fa-question-circle ms-4 me-2 text-yellow-500 cursor-pointer"
+                  (mouseenter)="showTooltip = true"
+                  (mouseleave)="showTooltip = false"
+                  (click)="showTooltip = !showTooltip"
+                  aria-label="Tooltip"></i>
+              
+                <!-- Tooltip content -->
+                <div class="tooltip {{ showTooltip ? 'visible' : 'invisible' }}">
+                  <!-- Tooltip text -->
+                  <div class="bg-gray-900 text-white p-2 rounded text-sm whitespace-normal">
+                    The GST percentage varies based on the price: 5% for prices up to 5000, 12% for prices between 5001 and 10000, and 18% for prices exceeding 10000.
+                  </div>
+                </div>
+                
+              </div>
+              GST Applicable
+              : {{roomDetails.room_category_price}}</span></span>
         </div>
         <div>
           <label for="booking_mode" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fas fa-building mr-1"></i> Booking Mode:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.booking.booking_mode }}</span>
+            bookingData.booking_mode }}</span>
         </div>
         <div>
           <label for="booking_status" class="block mb-1 text-sm font-medium text-blue-700">
@@ -66,7 +83,7 @@
           </label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">
-            {{ bookingData.booking.booking_status }}
+            {{ bookingData.booking_status }}
           </span>
         </div>
         
@@ -76,105 +93,105 @@
             <i class="fas fa-walking mr-1"></i> Payment ID:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.payment.payment_id }}</span>
+            bookingData.payment_id }}</span>
         </div>
         <div>
           <label for="invoice_no" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fas fa-file-invoice mr-1"></i> Invoice No:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.payment.invoice_no }}</span>
+            bookingData.invoice_no }}</span>
         </div>
         <div>
           <label for="reference_no" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fas fa-link mr-1"></i> Reference No:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.payment.reference_no }}</span>
+            bookingData.reference_no }}</span>
         </div>
         <div>
           <label for="transaction_id" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fas fa-exchange-alt mr-1"></i>  Transaction ID:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.payment.transaction_id }}</span>
+            bookingData.transaction_id }}</span>
         </div>
         <div>
           <label for="total_amount" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fas fa-money-bill-wave mr-1"></i>  Total Amount:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.payment.total_amount }}</span>
+            bookingData.total_amount }}</span>
         </div>
         <div>
           <label for="paid_amount" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fa-solid fa-money-bills"></i>  Paid Amount:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.payment.paid_amount }}</span>
+            bookingData.paid_amount }}</span>
         </div>
         <div>
           <label for="due_amount" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fa-solid fa-money-bill-transfer"></i> Due Amount:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.payment.due_amount }}</span>
+            bookingData.due_amount }}</span>
         </div>
         <div>
           <label for="payment_status" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fa-solid fa-money-check"></i> Payment Status:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.payment.payment_status }}</span>
+            bookingData.payment_status }}</span>
         </div>
         <div>
           <label for="upi_id" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fa-solid fa-credit-card"></i> UPI ID:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.payment.upi_id }}</span>
+            bookingData.upi_id }}</span>
         </div>
         <div>
           <label for="guest_name" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fa-solid fa-person-walking-luggage"></i> Guest Name:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.guests.guest_name }}</span>
+            bookingData.guest_name }}</span>
         </div>
         <div>
           <label for="guest_phone" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fa-solid fa-phone"></i> Guest Phone:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.guests.guest_phone }}</span>
+            bookingData.guest_phone }}</span>
         </div>
         <div>
           <label for="guest_address" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fa-solid fa-address-book"></i> Guest Address:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.guests.guest_address }}</span>
+            bookingData.guest_address }}</span>
         </div>
         <div>
           <label for="guest_email" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fa-solid fa-envelope"></i> Guest Email:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.guests.guest_email }}</span>
+            bookingData.guest_email }}</span>
         </div>
         <div>
           <label for="guest_total" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fa-solid fa-people-group"></i> Guest Total:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.guests.guest_total }}</span>
+            bookingData.guest_total }}</span>
         </div>
         <div>
           <label for="adults" class="block mb-1 text-sm font-medium text-blue-700">
             <i class="fas fa-user mr-1"></i> Adults:
           </label>
           <span class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">
-            {{ bookingData.guests.adults }}
+            {{ bookingData.adults }}
           </span>
         </div>
         
@@ -183,9 +200,12 @@
             <i class="fa-solid fa-children"></i> Childrens:</label>
           <span
             class="text-sm font-semibold inline-block py-1 px-2 rounded text-slate-800 bg-slate-200 uppercase last:mr-0 mr-1">{{
-            bookingData.guests.childrens }}</span>
+            bookingData.childrens }}</span>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+
+

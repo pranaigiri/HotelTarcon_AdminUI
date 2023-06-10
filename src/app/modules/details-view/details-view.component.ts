@@ -14,6 +14,7 @@ export class DetailsViewComponent implements OnInit {
   roomCategories:any=[];
   roomCategoryID:any;
   bookingId:any;
+  showTooltip:boolean =false;
   constructor(private route: ActivatedRoute, private apiService: ApiService, private router: Router) { }
 
   ngOnInit() {
@@ -24,10 +25,10 @@ export class DetailsViewComponent implements OnInit {
 
   GetBookingByBookingId(bookingId: string) {
     this.apiService.getDataById("Booking/GetBookingBySearchParam", bookingId).subscribe((res: any) => {
-      if (res.result.data) {
-        this.bookingData = res.result.data;
-        console.log(this.bookingData.payment.total_amount, "total price without GST");
-        this.roomCategoryID = this.bookingData.booking.room_category_id;
+      if (res.result) {
+        this.bookingData = res.result;
+        console.log(this.bookingData.total_amount, "total price without GST");
+        this.roomCategoryID = this.bookingData.room_category_id;
       }
       else {
         this.router.navigate(["admin/dashboard"]);

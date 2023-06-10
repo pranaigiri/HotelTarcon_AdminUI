@@ -87,40 +87,40 @@
               <!-- BOOKING ID -->
               <td
                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b dark:border-gray-700">
-                {{booking.booking.booking_id}}
+                {{booking.booking_id}}
               </td>
               <!-- GUEST NAME -->
               <td class="px-6 py-4 border-b dark:border-gray-700">
-                {{booking.guests.guest_name}}
+                {{booking.guest_name}}
               </td>
               <!-- STATUS -->
               <td class="px-6 py-4 border-b dark:border-gray-700">
-                {{booking.booking.booking_status}}
+                {{booking.booking_status}}
               </td>
               <!-- BOOKING DATE -->
               <td class="px-6 py-4 border-b dark:border-gray-700">
-                {{booking.booking.booking_date | date:'yyyy-MMM-dd'}}
+                {{booking.booking_date | date:'yyyy-MMM-dd'}}
               </td>
               <!-- CHECK-IN -->
               <td class="px-6 py-4 border-b dark:border-gray-700">
-                {{booking.booking.booking_from | date:'yyyy-MMM-dd'}}
+                {{booking.checkin | date:'yyyy-MMM-dd'}}
               </td>
               <!-- CHECK-OUT -->
               <td class="px-6 py-4 border-b dark:border-gray-700">
-                {{booking.booking.booking_till | date:'yyyy-MMM-dd'}}
+                {{booking.checkout | date:'yyyy-MMM-dd'}}
               </td>
               <!-- BOOKING MODE -->
               <td class="px-6 py-4 border-b dark:border-gray-700">
-                {{booking.booking.booking_mode}}
+                {{booking.booking_mode}}
               </td>
               <!-- TOTAL GUEST -->
               <td class="px-6 py-4 border-b dark:border-gray-700">
-                {{booking.guests.guest_total}}
+                {{booking.guest_total}}
               </td>
               <td class="px-6 py-4 text-center border-b dark:border-gray-700">
-                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" [routerLink]="['/admin/form', booking.booking.booking_id]">Edit</a>
+                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" [routerLink]="['/admin/form', booking.booking_id]">Edit</a>
                 <span> / </span>
-                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" [routerLink]="['/admin/details-view', booking.booking.booking_id]">Details</a>
+                <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline" [routerLink]="['/admin/details-view', booking.booking_id]">Details</a>
               </td>
               
             </tr>

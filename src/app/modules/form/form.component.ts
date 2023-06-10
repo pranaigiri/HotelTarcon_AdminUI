@@ -73,21 +73,20 @@ export class FormComponent implements OnInit {
 
   initializeForm() {
     console.log("Form Initialization", this.getCurrentDate());
-
     this.bookingForm = this.formBuilder.group({
-      guest_name: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.data.guests.guest_name, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
-      guest_email: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.data.guests.guest_email, [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]],
-      guest_phone: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.data.guests.guest_phone, [Validators.required, Validators.pattern(/^\d{10}$/)]],
-      adults: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.data.guests.adults, [Validators.required]],
+      guest_name: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.guest_name, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]],
+      guest_email: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.guest_email, [Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]],
+      guest_phone: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.guest_phone, [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      adults: [this.IsEditRequestedID == "0" ? '' :  this.EditFromData.adults == 0 ? '' : this.EditFromData.adults, [Validators.required]],
       idproof: ['', [Validators.required]],
       idproofvalue: [{ value: '', disabled: true }, [Validators.required, Validators.pattern('')]],
-      childrens: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.data.guests.childrens, [Validators.required]],
-      guest_address: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.data.guests.guest_address, [Validators.required]],
-      check_out: [this.IsEditRequestedID == "0" ? this.getCurrentDate() : this.datePipe.transform(this.EditFromData.data.booking.booking_till, "yyyy-MM-dd"), Validators.required],
-      check_in: [this.IsEditRequestedID == "0" ? this.getCurrentDate() : this.datePipe.transform(this.EditFromData.data.booking.booking_from, "yyyy-MM-dd"), Validators.required],
-      roomCategory: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.data.booking.room_category_id, this.IsEditRequestedID === "0" ? [] : [Validators.required]],
-      roomPrice: [this.IsEditRequestedID === "0" ? '' : parseFloat(this.EditFromData.data.booking.room_category_price) || 0],
-      bookingMode: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.data.booking.booking_mode]
+      childrens: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.childrens == 0 ? '' : this.EditFromData.childrens, [Validators.required]],
+      guest_address: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.guest_address, [Validators.required]],
+      check_out: [this.IsEditRequestedID == "0" ? this.getCurrentDate() : this.datePipe.transform(this.EditFromData.checout, "yyyy-MM-dd"), Validators.required],
+      check_in: [this.IsEditRequestedID == "0" ? this.getCurrentDate() : this.datePipe.transform(this.EditFromData.checkin, "yyyy-MM-dd"), Validators.required],
+      roomCategory: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.room_category_id == 0 ? '' :this.EditFromData.room_category_id , this.IsEditRequestedID === "0" ? [] : [Validators.required]],
+      roomPrice: [this.IsEditRequestedID === "0" ? '' : parseFloat(this.EditFromData.room_category_price) || 0],
+      bookingMode: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.booking_mode]
 
 
     });

@@ -1,0 +1,22 @@
+.tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 200px;
+    max-width: 80vw; /* Add this line to limit the maximum width to 90% of the viewport width */
+  }
+  
+  
+  .tooltip.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .tooltip.invisible {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
