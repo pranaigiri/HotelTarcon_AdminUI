@@ -26,6 +26,7 @@ export class DetailsViewComponent implements OnInit {
     this.apiService.getDataById("Booking/GetBookingBySearchParam", bookingId).subscribe((res: any) => {
       if (res.result.data) {
         this.bookingData = res.result.data;
+        console.log(this.bookingData.payment.total_amount, "total price without GST");
         this.roomCategoryID = this.bookingData.booking.room_category_id;
       }
       else {
