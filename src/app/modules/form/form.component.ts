@@ -81,7 +81,7 @@ export class FormComponent implements OnInit {
       adults: [this.IsEditRequestedID == "0" ? '' :  this.EditFromData.adults == 0 ? '' : this.EditFromData.adults, [Validators.required]],
       idproof: [this.IsEditRequestedID === "0" ? '' : this.EditFromData.document_type == null ? '' : this.EditFromData.document_type, [Validators.required]],
       idproofvalue: [{ value: this.IsEditRequestedID === "0" ? '' : this.EditFromData.document_uniqueid == null ? '' : this.EditFromData.document_uniqueid, disabled: true }, [Validators.required, Validators.pattern('')]],
-      childrens: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.childrens == 0 ? '' : this.EditFromData.childrens, [Validators.required]],
+      childrens: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.childrens == 0 ? '' : this.EditFromData.childrens],
       guest_address: [this.IsEditRequestedID == "0" ? '' : this.EditFromData.guest_address, [Validators.required]],
       check_out: [this.IsEditRequestedID == "0" ? this.getCurrentDate() : this.datePipe.transform(this.EditFromData.checkout, "yyyy-MM-dd"), Validators.required],
       check_in: [this.IsEditRequestedID == "0" ? this.getCurrentDate() : this.datePipe.transform(this.EditFromData.checkin, "yyyy-MM-dd"), Validators.required],
@@ -147,13 +147,13 @@ export class FormComponent implements OnInit {
         checkin: new Date(this.bookingForm.value.check_in),
         checkout: new Date(this.bookingForm.value.check_out),
         // booking_till: this.bookingForm.value.check_out,
-        room_category_id: this.bookingForm.value.room_category_id,
+        room_category_id: this.bookingForm.value.roomCategory,
         booking_mode: this.bookingForm.value.bookingMode,
         total_amount: calculationResult.overallprice,
         room_price: total_room_price,
         paid_amount: 0,
-        due_amount: this.bookingForm.value.partialPaymentAmount,
-        payment_status: this.bookingForm.value.paymentStatus,
+        due_amount: this.bookingForm.value.partialPaymentAmount == null ? 0 : this.bookingForm.value.partialPaymentAmount.trim() == "" ? 0 : this.bookingForm.value.partialPaymentAmount,
+        payment_status: this.bookingForm.value.paymentStatus == "" || null ? "Paid" : this.bookingForm.value.paymentStatus,
         booking_status:'Arriving',
         upi_id: this.bookingForm.value.upi_id == null ? null : this.bookingForm.value.upi_id.trim() == "" ? null : this.bookingForm.value.upi_id,
         transaction_id:this.bookingForm.value.transaction_id == null ? null : this.bookingForm.value.transaction_id.trim() == "" ? null :this.bookingForm.value.transaction_id,
@@ -164,16 +164,16 @@ export class FormComponent implements OnInit {
         guest_email: this.bookingForm.value.guest_email,
         guest_total: Number(this.bookingForm.value.adults) + Number(this.bookingForm.value.childrens),
         adults: this.bookingForm.value.adults,
-        childrens: this.bookingForm.value.childrens,
+        childrens: this.bookingForm.value.childrens == "" || this.bookingForm.value.childrens == null ? 0 : this.bookingForm.value.childrens,
         payment_id:null,
         order_id :null,
         invoice_no :null,
         reference_no :null,
         document_type :this.bookingForm.value.idproof == null ? null : this.bookingForm.value.idproof.trim() == "" ? null : this.bookingForm.value.idproof ,
-        document_uniqueid:this.bookingForm.value.idproofvalue == null ? null : this.bookingForm.value.idproofvalue.trim() == "" ? null :this.bookingForm.value.idproofvalue
+        document_uniqueid:this.bookingForm.value.idproofvalue == null || this.bookingForm.value.idproofvalue.trim() == "" ? null : this.bookingForm.value.idproofvalue.trim() == "" ? null :this.bookingForm.value.idproofvalue
       };
 
-      if(this.IsEditRequestedID!="0"){
+      if(this.IsEditRequestedID=="0"){
         //New Insert Booking
       this.apiService.postData("Booking/InsertBooking", postObj).subscribe((res: any) => {
         console.log("Response Success !");
